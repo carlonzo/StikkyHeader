@@ -6,11 +6,11 @@ import android.widget.ListView;
 
 public abstract class HeaderAnimator {
 
-    protected View mHeader;
-    protected ListView mListView;
-    protected int mMinHeightHeader;
-    protected int mHeightHeader;
-    protected int mMaxTransiction;
+    private View mHeader;
+    private ListView mListView;
+    private int mMinHeightHeader;
+    private int mHeightHeader;
+    private int mMaxTransiction;
 
     public abstract void onScroll(final int scrolledY);
 
@@ -27,11 +27,39 @@ public abstract class HeaderAnimator {
         this.mHeightHeader = mHeightHeader;
         this.mMaxTransiction = mMaxTransiction;
 
-        onAnimatorAttached();
+        onAnimatorCreated();
     }
 
+    /**
+     * Called after that the animator is attached to the
+     */
+    protected abstract void onAnimatorCreated();
+
+    /**
+     * Called before the first onScroll is called and after the onAnimatorCreated
+     */
     protected void onAnimatorAttached() {
-        // empty. Called when the animator is setup
+
+    }
+
+    public View getHeader() {
+        return mHeader;
+    }
+
+    public ListView getListView() {
+        return mListView;
+    }
+
+    public int getMinHeightHeader() {
+        return mMinHeightHeader;
+    }
+
+    public int getHeightHeader() {
+        return mHeightHeader;
+    }
+
+    public int getMaxTransiction() {
+        return mMaxTransiction;
     }
 
     public static float clamp(float value, float min, float max) {
