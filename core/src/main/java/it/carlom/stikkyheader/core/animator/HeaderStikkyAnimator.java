@@ -1,24 +1,45 @@
 package it.carlom.stikkyheader.core.animator;
 
-import it.carlom.stikkyheader.core.HeaderAnimator;
+public class HeaderStikkyAnimator extends BaseStickyHeaderAnimator {
 
+    private float mBoundedTranslatedRatio;
 
-public class HeaderStikkyAnimator extends HeaderAnimator {
-    private static final String TAG = HeaderStikkyAnimator.class.getName();
+    protected AnimatorBuilder mAnimatorBuilder;
 
-    protected float mTransictionRatio;
+    private boolean hasAnimatorBundles = false;
+
+    @Override
+    protected void onAnimatorCreated() {
+        //nothing to do
+    }
+
+    @Override
+    protected void onAnimatorAttached() {
+        super.onAnimatorAttached();
+
+        hasAnimatorBundles = (mAnimatorBuilder != null) && (mAnimatorBuilder.hasAnimatorBundles());
+
+    }
 
     @Override
     public void onScroll(int scrolledY) {
+        super.onScroll(scrolledY);
 
-        mHeader.setTranslationY(Math.max(scrolledY, mMaxTransiction));
+        mBoundedTranslatedRatio = clamp(getTranslationRatio(), 0f, 1f);
 
-        mTransictionRatio = calculateTransictionRatio(scrolledY);
+        if (hasAnimatorBundles) {
+            mAnimatorBuilder.animateOnScroll(mBoundedTranslatedRatio, getHeader().getTranslationY());
+        }
 
     }
 
-    private float calculateTransictionRatio(int scrolledY) {
-        return (float) scrolledY / (float) mMaxTransiction;
+
+    public void setAnimatorBuilder(final AnimatorBuilder animatorBuilder) {
+        this.mAnimatorBuilder = animatorBuilder;
     }
 
+
+    public float getBoundedTransletedRatio() {
+        return mBoundedTranslatedRatio;
+    }
 }

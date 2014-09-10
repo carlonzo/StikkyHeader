@@ -5,7 +5,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.AbsListView;
-import android.widget.FrameLayout;
 import android.widget.ListView;
 
 /**
@@ -17,22 +16,19 @@ public class StikkyHeader {
     private final ListView mListView;
 
     private View mHeader;
-    private final FrameLayout mContainerListView; //TODO useless here?
     private int mMinHeightHeader;
     private final HeaderAnimator mHeaderAnimator;
     private int mHeightHeader;
     private int mMaxHeaderTransaction;
     private View mFakeHeader;
-    private StickyOnScrollListener mStickyOnScrollListener;
     private AbsListView.OnScrollListener mDelegateOnScrollListener;
 
 
-    StikkyHeader(final Context context, final ListView absListView, final View header, final FrameLayout containerListView, final int mMinHeightHeader, final HeaderAnimator headerAnimator) {
+    StikkyHeader(final Context context, final ListView absListView, final View header, final int mMinHeightHeader, final HeaderAnimator headerAnimator) {
 
         this.mContext = context;
         this.mListView = absListView;
         this.mHeader = header;
-        this.mContainerListView = containerListView;
         this.mMinHeightHeader = mMinHeightHeader;
         this.mHeaderAnimator = headerAnimator;
 
@@ -49,8 +45,6 @@ public class StikkyHeader {
         }
 
         setAnimator();
-
-        mHeaderAnimator.onAnimatorAttached();
 
         setStickyOnScrollListener();
 
@@ -118,12 +112,13 @@ public class StikkyHeader {
 
         mHeaderAnimator.setupAnimator(mHeader, mListView, mMinHeightHeader, mHeightHeader, mMaxHeaderTransaction);
 
+        mHeaderAnimator.onAnimatorAttached();
     }
 
 
     private void setStickyOnScrollListener() {
 
-        mStickyOnScrollListener = new StickyOnScrollListener();
+        StickyOnScrollListener mStickyOnScrollListener = new StickyOnScrollListener();
         mListView.setOnScrollListener(mStickyOnScrollListener);
 
     }
@@ -171,9 +166,6 @@ public class StikkyHeader {
             return -top + firstVisiblePosition * c.getHeight() + headerHeight;
         }
 
-        public int getScrolledY() {
-            return mScrolledYList;
-        }
     }
 
 
