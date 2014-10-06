@@ -8,7 +8,12 @@ public class BaseStickyHeaderAnimator extends HeaderAnimator {
     private float mTranslationRatio;
 
     @Override
-    protected void onAnimatorCreated() {
+    protected void onAnimatorAttached() {
+        //nothing to do
+    }
+
+    @Override
+    protected void onAnimatorReady() {
         //nothing to do
     }
 

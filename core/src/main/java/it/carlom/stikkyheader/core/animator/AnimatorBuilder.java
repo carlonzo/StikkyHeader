@@ -8,6 +8,8 @@ import java.util.List;
 
 public class AnimatorBuilder {
 
+    public static final float DEFAULT_VELOCITY_ANIMATOR = 0.5f;
+
     private List<AnimatorBundle> mListAnimatorBundles;
 
     public AnimatorBuilder() {
@@ -20,6 +22,10 @@ public class AnimatorBuilder {
 
     public AnimatorBuilder applyScale(final View viewToScale, final Rect finalRect) {
 
+        if (viewToScale == null) {
+            throw new RuntimeException("You passed a null view");
+        }
+
         Rect from = buildViewRect(viewToScale);
         Float scaleX = calculateScaleX(from, finalRect);
         Float scaleY = calculateScaleY(from, finalRect);
@@ -29,7 +35,11 @@ public class AnimatorBuilder {
 
     public AnimatorBuilder applyScale(final View viewToScale, float scaleX, float scaleY) {
 
-        AnimatorBundle animatorScale = new AnimatorBundle(AnimatorBundle.TypeAnimation.SCALE, viewToScale, scaleX, scaleY);
+        if (viewToScale == null) {
+            throw new RuntimeException("You passed a null view");
+        }
+
+        AnimatorBundle animatorScale = AnimatorBundle.create(AnimatorBundle.TypeAnimation.SCALE, viewToScale, scaleX, scaleY);
 
         adjustTranslation(animatorScale);
 
@@ -40,6 +50,10 @@ public class AnimatorBuilder {
 
     public AnimatorBuilder applyTranslation(final View viewToTranslate, final Rect finalRect) {
 
+        if (viewToTranslate == null) {
+            throw new RuntimeException("You passed a null view");
+        }
+
         Rect from = buildViewRect(viewToTranslate);
         Float translationX = calculateTranslationX(from, finalRect);
         Float translationY = calculateTranslationY(from, finalRect);
@@ -49,7 +63,11 @@ public class AnimatorBuilder {
 
     public AnimatorBuilder applyTranslation(final View viewToTranslate, final float translateX, final float translateY) {
 
-        AnimatorBundle animatorTranslation = new AnimatorBundle(AnimatorBundle.TypeAnimation.TRANSLATION, viewToTranslate, translateX, translateY);
+        if (viewToTranslate == null) {
+            throw new RuntimeException("You passed a null view");
+        }
+
+        AnimatorBundle animatorTranslation = AnimatorBundle.create(AnimatorBundle.TypeAnimation.TRANSLATION, viewToTranslate, translateX, translateY);
 
         adjustTranslation(animatorTranslation);
 
@@ -58,9 +76,40 @@ public class AnimatorBuilder {
         return this;
     }
 
-    public AnimatorBuilder applyFade(final View viewToTranslate, final float fade) {
+    public AnimatorBuilder applyFade(final View viewToFade, final float fade) {
 
-        mListAnimatorBundles.add(new AnimatorBundle(AnimatorBundle.TypeAnimation.FADE, viewToTranslate, fade));
+        if (viewToFade == null) {
+            throw new RuntimeException("You passed a null view");
+        }
+
+        mListAnimatorBundles.add(AnimatorBundle.create(AnimatorBundle.TypeAnimation.FADE, viewToFade, fade));
+
+        return this;
+    }
+
+    /**
+     * @param viewToParallax
+     * @param velocityParallax the velocity to apply to the view in order to show the parallax effect. choose a velocity between 0 and 1 for better results
+     * @return
+     */
+    public AnimatorBuilder applyVerticalParallax(final View viewToParallax, final float velocityParallax) {
+
+        if (viewToParallax == null) {
+            throw new RuntimeException("You passed a null view");
+        }
+
+        mListAnimatorBundles.add(AnimatorBundle.create(AnimatorBundle.TypeAnimation.PARALLAX, viewToParallax, velocityParallax * -1));
+
+        return this;
+    }
+
+    public AnimatorBuilder applyVerticalParallax(final View viewToParallax) {
+
+        if (viewToParallax == null) {
+            throw new RuntimeException("You passed a null view");
+        }
+
+        mListAnimatorBundles.add(AnimatorBundle.create(AnimatorBundle.TypeAnimation.PARALLAX, viewToParallax, DEFAULT_VELOCITY_ANIMATOR * -1));
 
         return this;
     }
@@ -99,10 +148,6 @@ public class AnimatorBuilder {
         }
     }
 
-    public boolean hasAnimatorBundles() {
-        return mListAnimatorBundles.size() > 0;
-    }
-
     protected void animateOnScroll(final float boundedRatioTranslationY, float translationY) {
 
         for (AnimatorBuilder.AnimatorBundle animatorBundle : mListAnimatorBundles) {
@@ -123,6 +168,10 @@ public class AnimatorBuilder {
                     animatorBundle.mView.setScaleY(1f - (Float) animatorBundle.mValues[1] * boundedRatioTranslationY);
                     break;
 
+                case PARALLAX:
+                    animatorBundle.mView.setTranslationY((Float) animatorBundle.mValues[0] * translationY);
+                    break;
+
                 default:
                     break;
 
@@ -132,6 +181,9 @@ public class AnimatorBuilder {
 
     }
 
+    public boolean hasAnimatorBundles() {
+        return mListAnimatorBundles.size() > 0;
+    }
 
     public static Rect buildViewRect(final View view) {
         //TODO get coordinates related to the header
@@ -157,19 +209,27 @@ public class AnimatorBuilder {
     public static class AnimatorBundle {
 
         public enum TypeAnimation {
-            SCALE, FADE, TRANSLATION
+            SCALE, FADE, TRANSLATION, PARALLAX
         }
 
         private Object[] mValues;
-        private TypeAnimation mTypeAnimation;
+        private final TypeAnimation mTypeAnimation;
         private View mView;
 
-        public AnimatorBundle(final TypeAnimation typeAnimation, final View view, final Object... values) {
+        AnimatorBundle(final TypeAnimation typeAnimation) {
             mTypeAnimation = typeAnimation;
-            mView = view;
-            mValues = values;
+        }
+
+        public static AnimatorBundle create(final AnimatorBundle.TypeAnimation typeAnimation, final View view, final Object... values) {
+            AnimatorBundle animatorBundle = new AnimatorBundle(typeAnimation);
+
+            animatorBundle.mView = view;
+            animatorBundle.mValues = values;
+
+            return animatorBundle;
         }
 
     }
+
 
 }
