@@ -9,16 +9,17 @@ public class HeaderStikkyAnimator extends BaseStickyHeaderAnimator {
     private boolean hasAnimatorBundles = false;
 
     @Override
-    protected void onAnimatorCreated() {
-        //nothing to do
+    protected void onAnimatorReady() {
+        super.onAnimatorReady();
+        mAnimatorBuilder = getAnimatorBuilder();
+        hasAnimatorBundles = (mAnimatorBuilder != null) && (mAnimatorBuilder.hasAnimatorBundles());
     }
 
-    @Override
-    protected void onAnimatorAttached() {
-        super.onAnimatorAttached();
-
-        hasAnimatorBundles = (mAnimatorBuilder != null) && (mAnimatorBuilder.hasAnimatorBundles());
-
+    /**
+     * Override if you want to load the animator builder
+     */
+    public AnimatorBuilder getAnimatorBuilder() {
+        return null;
     }
 
     @Override
@@ -32,12 +33,6 @@ public class HeaderStikkyAnimator extends BaseStickyHeaderAnimator {
         }
 
     }
-
-
-    public void setAnimatorBuilder(final AnimatorBuilder animatorBuilder) {
-        this.mAnimatorBuilder = animatorBuilder;
-    }
-
 
     public float getBoundedTransletedRatio() {
         return mBoundedTranslatedRatio;

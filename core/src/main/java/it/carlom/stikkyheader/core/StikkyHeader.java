@@ -7,9 +7,6 @@ import android.view.ViewTreeObserver;
 import android.widget.AbsListView;
 import android.widget.ListView;
 
-/**
- * Created by carlo on 9/6/14.
- */
 public class StikkyHeader {
 
     private final Context mContext;
@@ -47,7 +44,6 @@ public class StikkyHeader {
         setAnimator();
 
         setStickyOnScrollListener();
-
     }
 
 
@@ -112,7 +108,6 @@ public class StikkyHeader {
 
         mHeaderAnimator.setupAnimator(mHeader, mListView, mMinHeightHeader, mHeightHeader, mMaxHeaderTransaction);
 
-        mHeaderAnimator.onAnimatorAttached();
     }
 
 

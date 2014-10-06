@@ -20,27 +20,26 @@ public abstract class HeaderAnimator {
      * @param header
      * @param listView
      */
-    void setupAnimator(final View header, final ListView listView, final int minHeightHeader, final int mHeightHeader, final int mMaxTransiction) {
+    void setupAnimator(final View header, final ListView listView, final int minHeightHeader, final int heightHeader, final int maxTransiction) {
         this.mHeader = header;
         this.mListView = listView;
         this.mMinHeightHeader = minHeightHeader;
-        this.mHeightHeader = mHeightHeader;
-        this.mMaxTransiction = mMaxTransiction;
+        this.mHeightHeader = heightHeader;
+        this.mMaxTransiction = maxTransiction;
 
-        onAnimatorCreated();
+        onAnimatorAttached();
+        onAnimatorReady();
     }
 
     /**
-     * Called after that the animator is attached to the
+     * Called after that the animator is attached to the header
      */
-    protected abstract void onAnimatorCreated();
+    protected abstract void onAnimatorAttached();
 
     /**
-     * Called before the first onScroll is called and after the onAnimatorCreated
+     * Called after that the animator is attached and ready
      */
-    protected void onAnimatorAttached() {
-
-    }
+    protected abstract void onAnimatorReady();
 
     public View getHeader() {
         return mHeader;
