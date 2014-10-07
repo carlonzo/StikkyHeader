@@ -6,11 +6,12 @@
     android:layout_height="350dp"
     android:background="@android:color/holo_blue_dark">
 
-    <ImageView
+    <View
         android:id="@+id/header_image"
         android:layout_width="130dp"
         android:layout_height="130dp"
         android:layout_gravity="center_horizontal|bottom"
-        android:src="@drawable/ic_launcher"/>
+        android:background="@android:color/holo_green_dark"
+        android:layout_marginBottom="15dp" />
 
 </FrameLayout>

@@ -3,6 +3,5 @@
 
     <string name="app_name">StickyHeaderExample</string>
     <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
 
 </resources>
