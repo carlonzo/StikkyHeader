@@ -1,7 +1,10 @@
-package it.carlom.stikkyheader.core.animator;
+package it.carlom.stickyheader.example.animator;
 
 import android.app.Activity;
 import android.view.View;
+
+import it.carlom.stikkyheader.core.animator.AnimatorBuilder;
+import it.carlom.stikkyheader.core.animator.HeaderStikkyAnimator;
 
 
 public class IconActionBarAnimator extends HeaderStikkyAnimator {
@@ -19,16 +22,14 @@ public class IconActionBarAnimator extends HeaderStikkyAnimator {
     }
 
     @Override
-    protected void onAnimatorCreated() {
-        super.onAnimatorCreated();
+    public AnimatorBuilder getAnimatorBuilder() {
 
         View mViewToAnimate = getHeader().findViewById(resIdLayoutToAnimate);
 
         AnimatorBuilder animatorBuilder = AnimatorBuilder.create()
-                .applyScale(mViewToAnimate, AnimatorBuilder.buildViewRect(homeActionBar))
-                .applyTranslation(mViewToAnimate, AnimatorBuilder.buildViewRect(homeActionBar));
+            .applyScale(mViewToAnimate, AnimatorBuilder.buildViewRect(homeActionBar))
+            .applyTranslation(mViewToAnimate, AnimatorBuilder.buildViewRect(homeActionBar));
 
-        setAnimatorBuilder(animatorBuilder);
+        return animatorBuilder;
     }
-
 }
