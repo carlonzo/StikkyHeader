@@ -171,7 +171,7 @@ public class AnimatorBuilder {
         }
     }
 
-    protected void animateOnScroll(final float boundedRatioTranslationY, float translationY) {
+    protected void animateOnScroll(final float boundedRatioTranslationY, final float translationY) {
 
         for (AnimatorBuilder.AnimatorBundle animatorBundle : mListAnimatorBundles) {
 

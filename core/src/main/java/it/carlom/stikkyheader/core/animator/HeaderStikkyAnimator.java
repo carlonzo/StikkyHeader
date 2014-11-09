@@ -25,7 +25,7 @@ public class HeaderStikkyAnimator extends BaseStickyHeaderAnimator {
     }
 
     @Override
-    public void onScroll(int scrolledY, final View header) {
+    public void onScroll(final int scrolledY, final View header) {
         super.onScroll(scrolledY, header);
 
         mBoundedTranslatedRatio = clamp(getTranslationRatio(), 0f, 1f);
