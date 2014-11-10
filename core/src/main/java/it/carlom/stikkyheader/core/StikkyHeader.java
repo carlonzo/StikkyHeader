@@ -19,6 +19,7 @@ public class StikkyHeader {
     private int mMaxHeaderTransaction;
     private View mFakeHeader;
     private AbsListView.OnScrollListener mDelegateOnScrollListener;
+    private OnStikkyScrollListener mOnStikkyScrollListener;
 
 
     StikkyHeader(final Context context, final ListView absListView, final View header, final int mMinHeightHeader, final HeaderAnimator headerAnimator) {
@@ -137,6 +138,10 @@ public class StikkyHeader {
             //notify the animator
             mHeaderAnimator.onScroll(mScrolledYList);
 
+            if (mOnStikkyScrollListener != null) {
+                mOnStikkyScrollListener.onScroll(view, mScrolledYList);
+            }
+
             if (mDelegateOnScrollListener != null) {
                 mDelegateOnScrollListener.onScroll(view, firstVisibleItem, visibleItemCount, totalItemCount);
             }
@@ -168,8 +173,16 @@ public class StikkyHeader {
         mDelegateOnScrollListener = onScrollListener;
     }
 
+    public void setOnStikkyScrollListener(final OnStikkyScrollListener onStikkyScrollListener) {
+        mOnStikkyScrollListener = onStikkyScrollListener;
+    }
+
     public void setMinHeightHeader(int minHeightHeader) {
         this.mMinHeightHeader = minHeightHeader;
         calculateMaxTransaction();
+    }
+
+    public interface OnStikkyScrollListener {
+        public void onScroll(final AbsListView absListView, final int scrolledY);
     }
 }
