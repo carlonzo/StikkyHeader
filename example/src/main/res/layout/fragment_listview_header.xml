@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
+
+    <ListView
+        android:id="@+id/listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/header_iconactionbar_animator"/>
+
+    <TextView
+        android:id="@+id/header_text_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/hello_world"
+        android:textSize="25sp"
+        android:layout_gravity="center_horizontal|top"
+        android:visibility="gone"/>
+
+</FrameLayout>

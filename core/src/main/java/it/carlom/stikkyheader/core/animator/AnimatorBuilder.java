@@ -2,13 +2,15 @@ package it.carlom.stikkyheader.core.animator;
 
 import android.graphics.Rect;
 import android.view.View;
+import android.view.animation.Interpolator;
+import android.view.animation.LinearInterpolator;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class AnimatorBuilder {
 
-    public static final float DEFAULT_VELOCITY_ANIMATOR = 0.5f;
+    public static final float DEFAULT_VELOCITY_PARALLAX = 0.5f;
 
     private List<AnimatorBundle> mListAnimatorBundles;
 
@@ -21,6 +23,10 @@ public class AnimatorBuilder {
     }
 
     public AnimatorBuilder applyScale(final View viewToScale, final Rect finalRect) {
+        return applyScale(viewToScale, finalRect, null);
+    }
+
+    public AnimatorBuilder applyScale(final View viewToScale, final Rect finalRect, final Interpolator interpolator) {
 
         if (viewToScale == null) {
             throw new RuntimeException("You passed a null view");
@@ -35,11 +41,16 @@ public class AnimatorBuilder {
 
     public AnimatorBuilder applyScale(final View viewToScale, float scaleX, float scaleY) {
 
+        return applyScale(viewToScale, scaleX, scaleY, null);
+    }
+
+    public AnimatorBuilder applyScale(final View viewToScale, float scaleX, float scaleY, final Interpolator interpolator) {
+
         if (viewToScale == null) {
             throw new RuntimeException("You passed a null view");
         }
 
-        AnimatorBundle animatorScale = AnimatorBundle.create(AnimatorBundle.TypeAnimation.SCALE, viewToScale, scaleX, scaleY);
+        AnimatorBundle animatorScale = AnimatorBundle.create(AnimatorBundle.TypeAnimation.SCALE, viewToScale, interpolator, scaleX, scaleY);
 
         adjustTranslation(animatorScale);
 
@@ -50,6 +61,11 @@ public class AnimatorBuilder {
 
     public AnimatorBuilder applyTranslation(final View viewToTranslate, final Rect finalRect) {
 
+        return applyTranslation(viewToTranslate, finalRect, null);
+    }
+
+    public AnimatorBuilder applyTranslation(final View viewToTranslate, final Rect finalRect, final Interpolator interpolator) {
+
         if (viewToTranslate == null) {
             throw new RuntimeException("You passed a null view");
         }
@@ -58,16 +74,21 @@ public class AnimatorBuilder {
         Float translationX = calculateTranslationX(from, finalRect);
         Float translationY = calculateTranslationY(from, finalRect);
 
-        return applyTranslation(viewToTranslate, translationX, translationY);
+        return applyTranslation(viewToTranslate, translationX, translationY, interpolator);
     }
 
     public AnimatorBuilder applyTranslation(final View viewToTranslate, final float translateX, final float translateY) {
+
+        return applyTranslation(viewToTranslate, translateX, translateY, null);
+    }
+
+    public AnimatorBuilder applyTranslation(final View viewToTranslate, final float translateX, final float translateY, final Interpolator interpolator) {
 
         if (viewToTranslate == null) {
             throw new RuntimeException("You passed a null view");
         }
 
-        AnimatorBundle animatorTranslation = AnimatorBundle.create(AnimatorBundle.TypeAnimation.TRANSLATION, viewToTranslate, translateX, translateY);
+        AnimatorBundle animatorTranslation = AnimatorBundle.create(AnimatorBundle.TypeAnimation.TRANSLATION, viewToTranslate, interpolator, translateX, translateY);
 
         adjustTranslation(animatorTranslation);
 
@@ -76,15 +97,17 @@ public class AnimatorBuilder {
         return this;
     }
 
-    public AnimatorBuilder applyFade(final View viewToFade, final float fade) {
-
+    public AnimatorBuilder applyFade(final View viewToFade, final float startFade, final float endFade, final Interpolator interpolator) {
         if (viewToFade == null) {
             throw new RuntimeException("You passed a null view");
         }
-
-        mListAnimatorBundles.add(AnimatorBundle.create(AnimatorBundle.TypeAnimation.FADE, viewToFade, fade));
-
+        mListAnimatorBundles.add(AnimatorBundle.create(AnimatorBundle.TypeAnimation.FADE, viewToFade, interpolator, startFade, endFade));
         return this;
+    }
+
+    public AnimatorBuilder applyFade(final View viewToFade, final float startFade, final float endFade) {
+
+        return applyFade(viewToFade, startFade, endFade, null);
     }
 
     /**
@@ -98,7 +121,7 @@ public class AnimatorBuilder {
             throw new RuntimeException("You passed a null view");
         }
 
-        mListAnimatorBundles.add(AnimatorBundle.create(AnimatorBundle.TypeAnimation.PARALLAX, viewToParallax, velocityParallax * -1));
+        mListAnimatorBundles.add(AnimatorBundle.create(AnimatorBundle.TypeAnimation.PARALLAX, viewToParallax, null, -velocityParallax));
 
         return this;
     }
@@ -109,7 +132,7 @@ public class AnimatorBuilder {
             throw new RuntimeException("You passed a null view");
         }
 
-        mListAnimatorBundles.add(AnimatorBundle.create(AnimatorBundle.TypeAnimation.PARALLAX, viewToParallax, DEFAULT_VELOCITY_ANIMATOR * -1));
+        mListAnimatorBundles.add(AnimatorBundle.create(AnimatorBundle.TypeAnimation.PARALLAX, viewToParallax, null, -DEFAULT_VELOCITY_PARALLAX));
 
         return this;
     }
@@ -155,17 +178,17 @@ public class AnimatorBuilder {
             switch (animatorBundle.mTypeAnimation) {
 
                 case FADE:
-                    animatorBundle.mView.setAlpha(boundedRatioTranslationY); //TODO performance issues?
+                    animatorBundle.mView.setAlpha((((Float) animatorBundle.mValues[1] - (Float) animatorBundle.mValues[0]) * animatorBundle.mInterpolator.getInterpolation(boundedRatioTranslationY)) + (Float) animatorBundle.mValues[0]); //TODO performance issues?
                     break;
 
                 case TRANSLATION:
-                    animatorBundle.mView.setTranslationX((Float) animatorBundle.mValues[0] * boundedRatioTranslationY);
-                    animatorBundle.mView.setTranslationY(((Float) animatorBundle.mValues[1] * boundedRatioTranslationY) - translationY);
+                    animatorBundle.mView.setTranslationX((Float) animatorBundle.mValues[0] * animatorBundle.mInterpolator.getInterpolation(boundedRatioTranslationY));
+                    animatorBundle.mView.setTranslationY(((Float) animatorBundle.mValues[1] * animatorBundle.mInterpolator.getInterpolation(boundedRatioTranslationY)) - translationY);
                     break;
 
                 case SCALE:
-                    animatorBundle.mView.setScaleX(1f - (Float) animatorBundle.mValues[0] * boundedRatioTranslationY);
-                    animatorBundle.mView.setScaleY(1f - (Float) animatorBundle.mValues[1] * boundedRatioTranslationY);
+                    animatorBundle.mView.setScaleX(1f - (Float) animatorBundle.mValues[0] * animatorBundle.mInterpolator.getInterpolation(boundedRatioTranslationY));
+                    animatorBundle.mView.setScaleY(1f - (Float) animatorBundle.mValues[1] * animatorBundle.mInterpolator.getInterpolation(boundedRatioTranslationY));
                     break;
 
                 case PARALLAX:
@@ -215,15 +238,21 @@ public class AnimatorBuilder {
         private Object[] mValues;
         private final TypeAnimation mTypeAnimation;
         private View mView;
+        private Interpolator mInterpolator;
 
         AnimatorBundle(final TypeAnimation typeAnimation) {
             mTypeAnimation = typeAnimation;
         }
 
-        public static AnimatorBundle create(final AnimatorBundle.TypeAnimation typeAnimation, final View view, final Object... values) {
+        public static AnimatorBundle create(final AnimatorBundle.TypeAnimation typeAnimation, final View view, final Interpolator interpolator, final Object... values) {
             AnimatorBundle animatorBundle = new AnimatorBundle(typeAnimation);
 
             animatorBundle.mView = view;
+            if (interpolator == null) {
+                animatorBundle.mInterpolator = new LinearInterpolator();
+            } else {
+                animatorBundle.mInterpolator = interpolator;
+            }
             animatorBundle.mValues = values;
 
             return animatorBundle;

@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -15,13 +17,13 @@ import it.carlom.stikkyheader.core.animator.AnimatorBuilder;
 import it.carlom.stikkyheader.core.animator.BaseStickyHeaderAnimator;
 import it.carlom.stikkyheader.core.animator.HeaderStikkyAnimator;
 
-public class ActionBarImageFragment extends Fragment {
+public class FadeOutInterpolatedFragment extends Fragment {
 
-    private View mHomeView;
     private ListView mListView;
     private View mHeader;
+    private View mText;
 
-    public ActionBarImageFragment() {
+    public FadeOutInterpolatedFragment() {
         // Required empty public constructor
     }
 
@@ -37,8 +39,8 @@ public class ActionBarImageFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         mListView = (ListView) view.findViewById(R.id.listview);
-        mHomeView = getActivity().findViewById(android.R.id.home);
         mHeader = view.findViewById(R.id.header);
+        mText = view.findViewById(R.id.header_text_layout);
     }
 
     @Override
@@ -66,10 +68,20 @@ public class ActionBarImageFragment extends Fragment {
                 View mViewToAnimate = getHeader().findViewById(R.id.header_image);
 
                 AnimatorBuilder animatorBuilder = AnimatorBuilder.create()
-                    .applyScale(mViewToAnimate, AnimatorBuilder.buildViewRect(mHomeView))
-                    .applyTranslation(mViewToAnimate, AnimatorBuilder.buildViewRect(mHomeView));
+                    .applyTranslation(mViewToAnimate, 0, -getHeader().getHeight(), new DecelerateInterpolator())
+                    .applyFade(mViewToAnimate, 0.9f, 0.15f, new AccelerateInterpolator(0.2f))
+                    .applyFade(mText, 0f, 1f);
 
                 return animatorBuilder;
+            }
+
+            @Override
+            protected void onAnimatorReady() {
+                super.onAnimatorReady();
+
+                mText.setVisibility(View.VISIBLE);
+                mText.setAlpha(0f);
+
             }
         };
 
