@@ -31,7 +31,7 @@ public class IO2014HeaderAnimator extends HeaderStikkyAnimator {
         View image = getHeader().findViewById(R.id.header_image);
 
         return new AnimatorBuilder()
-                .applyVerticalParallax(image, 0.5f);
+            .applyVerticalParallax(image, 0.5f);
     }
 
     @Override
@@ -64,9 +64,9 @@ public class IO2014HeaderAnimator extends HeaderStikkyAnimator {
     }
 
     @Override
-    public void onScroll(int scrolledY) {
-        super.onScroll(scrolledY);
-        float translatedY = getHeader().getTranslationY();
+    public void onScroll(int scrolledY, final View header) {
+        super.onScroll(scrolledY, header);
+        float translatedY = header.getTranslationY();
 
         float visibleHeightHeader = getHeightHeader() + translatedY;
 

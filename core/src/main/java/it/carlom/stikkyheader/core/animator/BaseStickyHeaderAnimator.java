@@ -1,5 +1,7 @@
 package it.carlom.stikkyheader.core.animator;
 
+import android.view.View;
+
 import it.carlom.stikkyheader.core.HeaderAnimator;
 
 
@@ -18,9 +20,9 @@ public class BaseStickyHeaderAnimator extends HeaderAnimator {
     }
 
     @Override
-    public void onScroll(int scrolledY) {
+    public void onScroll(int scrolledY, final View header) {
 
-        getHeader().setTranslationY(Math.max(scrolledY, getMaxTransiction()));
+        header.setTranslationY(Math.max(scrolledY, getMaxTransiction()));
 
         mTranslationRatio = calculateTransictionRatio(scrolledY);
     }
