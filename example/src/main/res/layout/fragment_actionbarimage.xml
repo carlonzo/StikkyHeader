@@ -1,7 +1,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/layout_container">
+    android:layout_height="match_parent">
 
     <ListView
         android:id="@+id/listview"
@@ -10,20 +10,38 @@
 
     <FrameLayout
         android:id="@+id/header"
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="@dimen/max_height_header"
-        android:background="@android:color/holo_blue_dark">
+        android:background="@android:color/holo_blue_light"
+        android:orientation="vertical">
 
         <View
             android:id="@+id/header_image"
             android:layout_width="130dp"
             android:layout_height="130dp"
             android:layout_gravity="center_horizontal|bottom"
-            android:background="@android:color/holo_green_dark"
             android:layout_marginBottom="15dp"
-            android:alpha="0.5" />
+            android:alpha="0.5"
+            android:background="@android:color/holo_green_dark" />
 
     </FrameLayout>
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:alpha="0.5"
+        android:background="@android:color/holo_blue_dark"
+        android:elevation="4dp">
+
+        <TextView
+            android:id="@+id/title_toolbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="10dp"
+            android:text="Title"
+            android:textSize="18sp" />
+
+    </android.support.v7.widget.Toolbar>
 
 </FrameLayout>

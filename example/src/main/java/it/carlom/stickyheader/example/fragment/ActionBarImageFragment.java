@@ -1,8 +1,10 @@
 package it.carlom.stickyheader.example.fragment;
 
 
-import android.app.Fragment;
+import android.graphics.Point;
+import android.graphics.Rect;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +19,7 @@ import it.carlom.stikkyheader.core.animator.HeaderStikkyAnimator;
 
 public class ActionBarImageFragment extends Fragment {
 
-    private View mHomeView;
+    private View mToolbar;
     private ListView mListView;
 
     public ActionBarImageFragment() {
@@ -36,21 +38,7 @@ public class ActionBarImageFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         mListView = (ListView) view.findViewById(R.id.listview);
-        mHomeView = getActivity().findViewById(android.R.id.home);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        getActivity().getActionBar().hide();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        getActivity().getActionBar().show();
-
+        mToolbar = view.findViewById(R.id.toolbar);
     }
 
     @Override
@@ -63,16 +51,16 @@ public class ActionBarImageFragment extends Fragment {
             @Override
             public AnimatorBuilder getAnimatorBuilder() {
 
-                View mViewToAnimate = getHeader().findViewById(R.id.header_image);
+                View viewToAnimate = getHeader().findViewById(R.id.header_image);
+                final View titleToolbar = mToolbar.findViewById(R.id.title_toolbar);
+                final Rect squareSizeToolbar = new Rect(0, 0, mToolbar.getHeight(), mToolbar.getHeight());
 
-                AnimatorBuilder animatorBuilder = AnimatorBuilder.create()
-                        .applyScale(mViewToAnimate, AnimatorBuilder.buildViewRect(mHomeView))
-                        .applyTranslation(mViewToAnimate, AnimatorBuilder.buildPointView(mHomeView))
-                        .applyFade(mViewToAnimate, 1f);
-
-
-                return animatorBuilder;
+                return AnimatorBuilder.create()
+                        .applyScale(viewToAnimate, squareSizeToolbar)
+                        .applyTranslation(viewToAnimate, new Point(titleToolbar.getRight(), 0))
+                        .applyFade(viewToAnimate, 1f);
             }
+
         };
 
         StikkyHeaderBuilder.stickTo(mListView)

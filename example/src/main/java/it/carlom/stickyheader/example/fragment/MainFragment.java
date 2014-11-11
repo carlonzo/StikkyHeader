@@ -1,8 +1,8 @@
 package it.carlom.stickyheader.example.fragment;
 
 
-import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +39,7 @@ public class MainFragment extends Fragment {
             "Parallax Simple Stikky Header",
             "ActionBarImage Header Animator",
             "I/O 2014 Header Animator",
+//            "MaterialLike Animator",
             "Recycler View Header",
             "Scroll View Header"
         };
@@ -70,7 +71,9 @@ public class MainFragment extends Fragment {
                     case 3:
                         fragment = new IO2014HeaderFragment();
                         break;
-
+//                    case 4:
+//                        fragment = new MaterialLikeHeaderFragment();
+//                        break;
                     case 4:
                         fragment = new RecyclerStikkyFragment();
                         break;
