@@ -20,9 +20,9 @@ public class BaseStickyHeaderAnimator extends HeaderAnimator {
     }
 
     @Override
-    public void onScroll(int scrolledY, final View header) {
+    public void onScroll(final int scrolledY, final View header) {
 
-        header.setTranslationY(Math.max(scrolledY, getMaxTransiction()));
+        header.setTranslationY(Math.max(scrolledY, getMaxTranslation()));
 
         mTranslationRatio = calculateTransictionRatio(scrolledY);
     }
@@ -31,8 +31,8 @@ public class BaseStickyHeaderAnimator extends HeaderAnimator {
         return mTranslationRatio;
     }
 
-    private float calculateTransictionRatio(int scrolledY) {
-        return (float) scrolledY / (float) getMaxTransiction();
+    private float calculateTransictionRatio(final int scrolledY) {
+        return (float) scrolledY / (float) getMaxTranslation();
     }
 
 }

@@ -15,7 +15,7 @@ public class StikkyHeaderBuilder {
     private final ListView mListView;
 
     private View mHeader;
-    private int mMinHeight;
+    private int mMinHeight = 0;
     private HeaderAnimator mAnimator;
 
     private StikkyHeaderBuilder(final ListView listView) {
@@ -28,7 +28,7 @@ public class StikkyHeaderBuilder {
         return new StikkyHeaderBuilder(listView);
     }
 
-    public StikkyHeaderBuilder addHeader(final View header, FrameLayout containerListView) {
+    public StikkyHeaderBuilder addHeader(final View header, final FrameLayout containerListView) {
 
         mHeader = header;
         containerListView.addView(header);
@@ -36,7 +36,7 @@ public class StikkyHeaderBuilder {
         return this;
     }
 
-    public StikkyHeaderBuilder addHeader(final int resLayout, FrameLayout containerListView) {
+    public StikkyHeaderBuilder addHeader(final int resLayout, final FrameLayout containerListView) {
 
         mHeader = LayoutInflater.from(mContext).inflate(resLayout, containerListView, false);
         containerListView.addView(mHeader);

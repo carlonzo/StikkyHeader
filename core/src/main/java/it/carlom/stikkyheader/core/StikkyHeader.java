@@ -1,6 +1,7 @@
 package it.carlom.stikkyheader.core;
 
 import android.content.Context;
+import android.os.Build;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -16,7 +17,7 @@ public class StikkyHeader {
     private int mMinHeightHeader;
     private final HeaderAnimator mHeaderAnimator;
     private int mHeightHeader;
-    private int mMaxHeaderTransaction;
+    private int mMaxHeaderTranslation;
     private View mFakeHeader;
     private AbsListView.OnScrollListener mDelegateOnScrollListener;
     private OnStikkyScrollListener mOnStikkyScrollListener;
@@ -59,11 +60,16 @@ public class StikkyHeader {
                 public void onGlobalLayout() {
                     int height = mHeader.getHeight();
                     if (height > 0) {
-                        mHeader.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+
+                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+                            mHeader.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                        } else {
+                            mHeader.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                        }
 
                         setHeightHeader(height);
 
-                        //call asynchronous. calling init back
+                        //the header is ready! we can init the stikky staff
                         init();
                     }
                 }
@@ -87,11 +93,11 @@ public class StikkyHeader {
         lpHeader.height = mHeightHeader;
         mHeader.setLayoutParams(lpHeader);
 
-        calculateMaxTransaction();
+        calculateMaxTranslation();
     }
 
-    private void calculateMaxTransaction() {
-        mMaxHeaderTransaction = mMinHeightHeader - mHeightHeader;
+    private void calculateMaxTranslation() {
+        mMaxHeaderTranslation = mMinHeightHeader - mHeightHeader;
     }
 
     private void setFakeHeader() {
@@ -107,7 +113,7 @@ public class StikkyHeader {
 
     private void setAnimator() {
 
-        mHeaderAnimator.setupAnimator(mHeader, mListView, mMinHeightHeader, mHeightHeader, mMaxHeaderTransaction);
+        mHeaderAnimator.setupAnimator(mHeader, mListView, mMinHeightHeader, mHeightHeader, mMaxHeaderTranslation);
 
     }
 
@@ -125,16 +131,17 @@ public class StikkyHeader {
         private int mScrolledYList = 0;
 
         @Override
-        public void onScrollStateChanged(AbsListView view, int scrollState) {
+        public void onScrollStateChanged(final AbsListView view, final int scrollState) {
             if (mDelegateOnScrollListener != null) {
                 mDelegateOnScrollListener.onScrollStateChanged(view, scrollState);
             }
         }
 
         @Override
-        public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+        public void onScroll(final AbsListView view, final int firstVisibleItem, final int visibleItemCount, final int totalItemCount) {
 
             mScrolledYList = -calculateScrollYList();
+
             //notify the animator
             mHeaderAnimator.onScroll(mScrolledYList, mHeader);
 
@@ -170,7 +177,7 @@ public class StikkyHeader {
 
     public void setMinHeightHeader(int minHeightHeader) {
         this.mMinHeightHeader = minHeightHeader;
-        calculateMaxTransaction();
+        calculateMaxTranslation();
     }
 
     public interface OnStikkyScrollListener {

@@ -10,7 +10,7 @@ public abstract class HeaderAnimator {
     private ListView mListView;
     private int mMinHeightHeader;
     private int mHeightHeader;
-    private int mMaxTransiction;
+    private int mMaxTranslation;
 
     public abstract void onScroll(final int scrolledY,final View header);
 
@@ -20,12 +20,12 @@ public abstract class HeaderAnimator {
      * @param header
      * @param listView
      */
-    void setupAnimator(final View header, final ListView listView, final int minHeightHeader, final int heightHeader, final int maxTransiction) {
+    void setupAnimator(final View header, final ListView listView, final int minHeightHeader, final int heightHeader, final int maxTranslation) {
         this.mHeader = header;
         this.mListView = listView;
         this.mMinHeightHeader = minHeightHeader;
         this.mHeightHeader = heightHeader;
-        this.mMaxTransiction = maxTransiction;
+        this.mMaxTranslation = maxTranslation;
 
         onAnimatorAttached();
         onAnimatorReady();
@@ -57,8 +57,8 @@ public abstract class HeaderAnimator {
         return mHeightHeader;
     }
 
-    public int getMaxTransiction() {
-        return mMaxTransiction;
+    public int getMaxTranslation() {
+        return mMaxTranslation;
     }
 
     public static float clamp(float value, float min, float max) {
