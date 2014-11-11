@@ -135,7 +135,7 @@ public class StikkyHeader {
 
             mScrolledYList = -calculateScrollYList();
             //notify the animator
-            mHeaderAnimator.onScroll(mScrolledYList);
+            mHeaderAnimator.onScroll(mScrolledYList, mHeader);
 
             if (mDelegateOnScrollListener != null) {
                 mDelegateOnScrollListener.onScroll(view, firstVisibleItem, visibleItemCount, totalItemCount);
@@ -148,17 +148,8 @@ public class StikkyHeader {
                 return 0;
             }
 
-            //TODO support more than 1 header?
-
             int firstVisiblePosition = mListView.getFirstVisiblePosition();
-            int top = c.getTop();
-
-            int headerHeight = 0;
-            if (firstVisiblePosition >= 1) { //TODO >= number of header
-                headerHeight = mHeightHeader;
-            }
-
-            return -top + firstVisiblePosition * c.getHeight() + headerHeight;
+            return -c.getTop() + firstVisiblePosition * c.getHeight() + (firstVisiblePosition >= 1 ? mHeightHeader : 0);//TODO >= number of header;
         }
 
     }
