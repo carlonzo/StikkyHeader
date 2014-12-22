@@ -45,9 +45,7 @@ public class StikkyHeaderBuilder {
     }
 
     public StikkyHeaderBuilder setHeader(final View header) {
-
         mHeader = header;
-
         return this;
     }
 
