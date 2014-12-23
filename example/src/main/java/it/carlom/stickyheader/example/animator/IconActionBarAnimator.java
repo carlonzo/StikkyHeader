@@ -28,7 +28,7 @@ public class IconActionBarAnimator extends HeaderStikkyAnimator {
 
         AnimatorBuilder animatorBuilder = AnimatorBuilder.create()
             .applyScale(mViewToAnimate, AnimatorBuilder.buildViewRect(homeActionBar))
-            .applyTranslation(mViewToAnimate, AnimatorBuilder.buildViewRect(homeActionBar));
+            .applyTranslation(mViewToAnimate, AnimatorBuilder.buildPointView(homeActionBar));
 
         return animatorBuilder;
     }

@@ -5,7 +5,7 @@ import it.carlom.stikkyheader.core.HeaderAnimator;
 
 public class BaseStickyHeaderAnimator extends HeaderAnimator {
 
-    private float mTranslationRatio;
+    private float mTransactionRatio;
 
     @Override
     protected void onAnimatorAttached() {
@@ -20,17 +20,17 @@ public class BaseStickyHeaderAnimator extends HeaderAnimator {
     @Override
     public void onScroll(int scrolledY) {
 
-        getHeader().setTranslationY(Math.max(scrolledY, getMaxTransiction()));
+        getHeader().setTranslationY(Math.max(scrolledY, getMaxTransaction()));
 
-        mTranslationRatio = calculateTransictionRatio(scrolledY);
+        mTransactionRatio = calculateTransactionRatio(scrolledY);
     }
 
     public float getTranslationRatio() {
-        return mTranslationRatio;
+        return mTransactionRatio;
     }
 
-    private float calculateTransictionRatio(int scrolledY) {
-        return (float) scrolledY / (float) getMaxTransiction();
+    private float calculateTransactionRatio(int scrolledY) {
+        return (float) scrolledY / (float) getMaxTransaction();
     }
 
 }
