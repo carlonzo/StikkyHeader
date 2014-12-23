@@ -68,7 +68,7 @@ public class ActionBarImageFragment extends Fragment {
 
                 AnimatorBuilder animatorBuilder = AnimatorBuilder.create()
                         .applyScale(mViewToAnimate, AnimatorBuilder.buildViewRect(mHomeView))
-                        .applyTranslation(mViewToAnimate, AnimatorBuilder.buildViewRect(mHomeView));
+                        .applyTranslation(mViewToAnimate, AnimatorBuilder.buildPointView(mHomeView));
 
 
                 return animatorBuilder;
