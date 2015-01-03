@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.FrameLayout;
 import android.widget.ListView;
 
 import it.carlom.stickyheader.example.R;
@@ -29,7 +28,7 @@ public class ActionBarImageFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_simplelistview, container, false);
+        return inflater.inflate(R.layout.fragment_actionbarimage, container, false);
     }
 
     @Override
@@ -67,8 +66,8 @@ public class ActionBarImageFragment extends Fragment {
                 View mViewToAnimate = getHeader().findViewById(R.id.header_image);
 
                 AnimatorBuilder animatorBuilder = AnimatorBuilder.create()
-                        .applyScale(mViewToAnimate, AnimatorBuilder.buildViewRect(mHomeView))
-                        .applyTranslation(mViewToAnimate, AnimatorBuilder.buildPointView(mHomeView));
+                    .applyScale(mViewToAnimate, AnimatorBuilder.buildViewRect(mHomeView))
+                    .applyTranslation(mViewToAnimate, AnimatorBuilder.buildPointView(mHomeView));
 
 
                 return animatorBuilder;
@@ -76,10 +75,10 @@ public class ActionBarImageFragment extends Fragment {
         };
 
         StikkyHeaderBuilder.stickTo(mListView)
-                .addHeader(R.layout.header_iconactionbar_animator, (FrameLayout) getView().findViewById(R.id.layout_container))
-                .minHeightHeaderPixel(250)
-                .animator(animator)
-                .build();
+            .setHeader(R.id.header, (ViewGroup) getView())
+            .minHeightHeaderPixel(250)
+            .animator(animator)
+            .build();
 
         populateListView();
 
@@ -92,7 +91,7 @@ public class ActionBarImageFragment extends Fragment {
             elements[i] = "row " + i;
         }
 
-        mListView.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, elements));
+        mListView.setAdapter(new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, elements));
 
     }
 

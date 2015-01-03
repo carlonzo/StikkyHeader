@@ -24,15 +24,9 @@ public class StikkyHeaderListView extends StikkyHeader {
         init();
     }
 
-    @Override
-    protected void init() {
-
-        if (mHeader != null && mHeightHeader == 0) {
-            measureHeaderHeight();
-            return;
-        }
-
+    private void init() {
         createFakeHeader();
+        measureHeaderHeight();
         setupAnimator();
         setStickyOnScrollListener();
     }

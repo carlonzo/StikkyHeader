@@ -9,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import it.carlom.stickyheader.example.R;
@@ -45,8 +44,8 @@ public class RecyclerStikkyFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         StikkyHeaderBuilder.stickTo(mRecyclerView)
-            .addHeader(R.layout.simple_header, (FrameLayout) getView().findViewById(R.id.layout_container))
-            .minHeightHeaderPixel(250)
+            .setHeader(R.id.header, (ViewGroup) getView())
+            .minHeightHeaderRes(R.dimen.min_height_header)
             .build();
 
         populateListView();
