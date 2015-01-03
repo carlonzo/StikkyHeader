@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.FrameLayout;
 import android.widget.ListView;
 
 import it.carlom.stickyheader.example.R;
@@ -53,7 +52,7 @@ public class SimpleStikkyFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         StikkyHeaderBuilder.stickTo(mListView)
-            .addHeader(R.layout.simple_header, (FrameLayout) getView().findViewById(R.id.layout_container))
+            .setHeader(R.id.header, (ViewGroup) getView())
             .minHeightHeaderPixel(250)
             .build();
 
@@ -69,7 +68,7 @@ public class SimpleStikkyFragment extends Fragment {
             elements[i] = "row " + i;
         }
 
-        mListView.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, elements));
+        mListView.setAdapter(new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, elements));
 
     }
 

@@ -3,11 +3,15 @@ package it.carlom.stikkyheader.core;
 
 import android.content.Context;
 import android.support.annotation.DimenRes;
+import android.support.annotation.IdRes;
+import android.support.annotation.LayoutRes;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ListView;
+import android.widget.ScrollView;
 
 import it.carlom.stikkyheader.core.animator.HeaderStikkyAnimator;
 
@@ -32,19 +36,12 @@ public abstract class StikkyHeaderBuilder {
         return new RecyclerViewBuilder(recyclerView);
     }
 
-    public StikkyHeaderBuilder addHeader(final View header, final FrameLayout containerListView) {
-
-        mHeader = header;
-        containerListView.addView(header);
-
-        return this;
+    public static ScrollViewBuilder stickTo(final ScrollView scrollView) {
+        return new ScrollViewBuilder(scrollView);
     }
 
-    public StikkyHeaderBuilder addHeader(final int resLayout, final FrameLayout containerListView) {
-
-        mHeader = LayoutInflater.from(mContext).inflate(resLayout, containerListView, false);
-        containerListView.addView(mHeader);
-
+    public StikkyHeaderBuilder setHeader(@IdRes final int idHeader, final ViewGroup view) {
+        mHeader = view.findViewById(idHeader);
         return this;
     }
 
@@ -80,7 +77,7 @@ public abstract class StikkyHeaderBuilder {
         }
 
         @Override
-        public StikkyHeader build() {
+        public StikkyHeaderListView build() {
 
             //if the animator has not been set, the default one is used
             if (mAnimator == null) {
@@ -95,13 +92,13 @@ public abstract class StikkyHeaderBuilder {
 
         private final RecyclerView mRecyclerView;
 
-        protected RecyclerViewBuilder(RecyclerView mRecyclerView) {
+        protected RecyclerViewBuilder(final RecyclerView mRecyclerView) {
             super(mRecyclerView.getContext());
             this.mRecyclerView = mRecyclerView;
         }
 
         @Override
-        public StikkyHeader build() {
+        public StikkyHeaderRecyclerView build() {
 
             //if the animator has not been set, the default one is used
             if (mAnimator == null) {
@@ -109,6 +106,28 @@ public abstract class StikkyHeaderBuilder {
             }
 
             return new StikkyHeaderRecyclerView(mContext, mRecyclerView, mHeader, mMinHeight, mAnimator);
+        }
+
+    }
+
+    public static class ScrollViewBuilder extends StikkyHeaderBuilder {
+
+        private final ScrollView mScrollView;
+
+        protected ScrollViewBuilder(final ScrollView scrollView) {
+            super(scrollView.getContext());
+            this.mScrollView = scrollView;
+        }
+
+        @Override
+        public StikkyHeaderScrollView build() {
+
+            //if the animator has not been set, the default one is used
+            if (mAnimator == null) {
+                mAnimator = new HeaderStikkyAnimator();
+            }
+
+            return new StikkyHeaderScrollView(mContext, mScrollView, mHeader, mMinHeight, mAnimator);
         }
 
     }

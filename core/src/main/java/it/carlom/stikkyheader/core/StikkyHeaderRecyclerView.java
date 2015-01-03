@@ -26,17 +26,17 @@ public class StikkyHeaderRecyclerView extends StikkyHeader {
     }
 
 
-    @Override
-    protected void init() {
-
-        if (mHeader != null && mHeightHeader == 0) {
-            measureHeaderHeight();
-            return;
-        }
-
-        setupItemDecorator();
+    private void init() {
+        measureHeaderHeight();
         setupAnimator();
         setupOnScrollListener();
+    }
+
+    @Override
+    protected void setHeightHeader(int heightHeader) {
+        super.setHeightHeader(heightHeader);
+
+        setupItemDecorator();
     }
 
     private void setupItemDecorator() {

@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.FrameLayout;
 import android.widget.ListView;
 
 import it.carlom.stickyheader.example.R;
@@ -28,7 +27,7 @@ public class ParallaxStikkyFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_simplelistview, container, false);
+        return inflater.inflate(R.layout.fragment_parallax, container, false);
     }
 
     @Override
@@ -55,11 +54,10 @@ public class ParallaxStikkyFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         StikkyHeaderBuilder.stickTo(mListView)
-            .addHeader(R.layout.parallax_header, (FrameLayout) getView().findViewById(R.id.layout_container))
+            .setHeader(R.id.header, (ViewGroup) getView())
             .minHeightHeaderRes(R.dimen.min_height_header)
             .animator(new ParallaxStikkyAnimator())
             .build();
-
 
         populateListView();
 
@@ -82,7 +80,7 @@ public class ParallaxStikkyFragment extends Fragment {
             elements[i] = "row " + i;
         }
 
-        mListView.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, elements));
+        mListView.setAdapter(new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, elements));
 
     }
 

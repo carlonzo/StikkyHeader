@@ -16,8 +16,6 @@ public abstract class StikkyHeader {
     protected int mMaxHeaderTransaction;
     protected View mFakeHeader;
 
-    protected abstract void init();
-
     protected void measureHeaderHeight() {
 
         int height = mHeader.getHeight();
@@ -30,17 +28,12 @@ public abstract class StikkyHeader {
                     int height = mHeader.getHeight();
                     if (height > 0) {
                         mHeader.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-
                         setHeightHeader(height);
-
-                        //call asynchronous. calling init back
-                        init();
                     }
                 }
             });
         } else {
             setHeightHeader(height);
-            init();
         }
 
     }
@@ -60,6 +53,7 @@ public abstract class StikkyHeader {
         mHeader.setLayoutParams(lpHeader);
 
         calculateMaxTransaction();
+        setupAnimator(); // update heights
     }
 
     private void calculateMaxTransaction() {
