@@ -3,7 +3,7 @@ StikkyHeader
 
 This is a very simple library for Android that allows you to stick an header to a ListView and easly apply animation to it
 
-## Code Example
+## Using
 
 To use the StikkyHeader library, you just need 3 lines:
 
@@ -13,7 +13,7 @@ To use the StikkyHeader library, you just need 3 lines:
     .minHeightHeaderPixel(250)
     .build();
 ```
-that's all. 
+that's all, folks! 
 
 ## Header Animator
 
