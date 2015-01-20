@@ -17,8 +17,10 @@ that's all.
 
 ## Header Animator
 
-Using the StikkyHeader you can create easly some nice animations extending the ``HeaderStikkyAnimator`` and using the utility ``AnimatorBuilder`` :
+Using the StikkyHeader you can create easly some nice animations extending the ``HeaderStikkyAnimator`` and using the utility ``AnimatorBuilder``.
+The animations available are ``Translation``, ``Scale`` and ``Fade`` and can be combined to build an animation during the translation of the StikkyHeader.
 
+Example:
 ```java
 public class IconAnimator extends HeaderStikkyAnimator {
 
@@ -58,3 +60,7 @@ The StikkyHeader supports:
 - RecyclerView
 - ScrollView
 
+## Video
+
+![Example 1](https://raw.githubusercontent.com/carlonzo/StikkyHeader/develop/readme/example1.gif)
+![Example 2](https://raw.githubusercontent.com/carlonzo/StikkyHeader/develop/readme/example2.gif)
