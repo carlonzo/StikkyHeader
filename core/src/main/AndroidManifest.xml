@@ -1,3 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="it.carlom.stikkyheader" />
+<manifest package="it.carlom.stikkyheader">
+
+    <application/>
+</manifest>
 
