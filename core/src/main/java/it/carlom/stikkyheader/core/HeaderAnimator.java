@@ -2,30 +2,24 @@ package it.carlom.stikkyheader.core;
 
 
 import android.view.View;
-import android.widget.ListView;
 
 public abstract class HeaderAnimator {
 
     private View mHeader;
-    private ListView mListView;
     private int mMinHeightHeader;
     private int mHeightHeader;
-    private int mMaxTranslation;
+    private int mMaxTransaction;
 
-    public abstract void onScroll(final int scrolledY,final View header);
+    public abstract void onScroll(final int scrolledY);
 
     /**
      * Called by the {@link it.carlom.stikkyheader.core.StikkyHeader} to set the {@link HeaderAnimator} up
-     *
-     * @param header
-     * @param listView
      */
-    void setupAnimator(final View header, final ListView listView, final int minHeightHeader, final int heightHeader, final int maxTranslation) {
+    void setupAnimator(final View header, final int minHeightHeader, final int heightHeader, final int maxTransaction) {
         this.mHeader = header;
-        this.mListView = listView;
         this.mMinHeightHeader = minHeightHeader;
         this.mHeightHeader = heightHeader;
-        this.mMaxTranslation = maxTranslation;
+        this.mMaxTransaction = maxTransaction;
 
         onAnimatorAttached();
         onAnimatorReady();
@@ -45,10 +39,6 @@ public abstract class HeaderAnimator {
         return mHeader;
     }
 
-    public ListView getListView() {
-        return mListView;
-    }
-
     public int getMinHeightHeader() {
         return mMinHeightHeader;
     }
@@ -57,8 +47,8 @@ public abstract class HeaderAnimator {
         return mHeightHeader;
     }
 
-    public int getMaxTranslation() {
-        return mMaxTranslation;
+    public int getMaxTransaction() {
+        return mMaxTransaction;
     }
 
     public static float clamp(float value, float min, float max) {

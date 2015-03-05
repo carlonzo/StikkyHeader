@@ -1,7 +1,5 @@
 package it.carlom.stikkyheader.core.animator;
 
-import android.view.View;
-
 public class HeaderStikkyAnimator extends BaseStickyHeaderAnimator {
 
     private float mBoundedTranslatedRatio;
@@ -25,13 +23,13 @@ public class HeaderStikkyAnimator extends BaseStickyHeaderAnimator {
     }
 
     @Override
-    public void onScroll(final int scrolledY, final View header) {
-        super.onScroll(scrolledY, header);
+    public void onScroll(int scrolledY) {
+        super.onScroll(scrolledY);
 
         mBoundedTranslatedRatio = clamp(getTranslationRatio(), 0f, 1f);
 
         if (hasAnimatorBundles) {
-            mAnimatorBuilder.animateOnScroll(mBoundedTranslatedRatio, header.getTranslationY());
+            mAnimatorBuilder.animateOnScroll(mBoundedTranslatedRatio, getHeader().getTranslationY());
         }
 
     }

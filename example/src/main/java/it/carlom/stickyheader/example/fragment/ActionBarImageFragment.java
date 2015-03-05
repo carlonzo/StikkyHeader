@@ -19,7 +19,6 @@ public class ActionBarImageFragment extends Fragment {
 
     private View mHomeView;
     private ListView mListView;
-    private View mHeader;
 
     public ActionBarImageFragment() {
         // Required empty public constructor
@@ -29,7 +28,7 @@ public class ActionBarImageFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_listview_header, container, false);
+        return inflater.inflate(R.layout.fragment_actionbarimage, container, false);
     }
 
     @Override
@@ -38,12 +37,12 @@ public class ActionBarImageFragment extends Fragment {
 
         mListView = (ListView) view.findViewById(R.id.listview);
         mHomeView = getActivity().findViewById(android.R.id.home);
-        mHeader = view.findViewById(R.id.header);
     }
 
     @Override
     public void onStart() {
         super.onStart();
+
         getActivity().getActionBar().hide();
     }
 
@@ -51,6 +50,7 @@ public class ActionBarImageFragment extends Fragment {
     public void onStop() {
         super.onStop();
         getActivity().getActionBar().show();
+
     }
 
     @Override
@@ -67,14 +67,15 @@ public class ActionBarImageFragment extends Fragment {
 
                 AnimatorBuilder animatorBuilder = AnimatorBuilder.create()
                     .applyScale(mViewToAnimate, AnimatorBuilder.buildViewRect(mHomeView))
-                    .applyTranslation(mViewToAnimate, AnimatorBuilder.buildViewRect(mHomeView));
+                    .applyTranslation(mViewToAnimate, AnimatorBuilder.buildPointView(mHomeView));
+
 
                 return animatorBuilder;
             }
         };
 
         StikkyHeaderBuilder.stickTo(mListView)
-            .setHeader(mHeader)
+            .setHeader(R.id.header, (ViewGroup) getView())
             .minHeightHeaderPixel(250)
             .animator(animator)
             .build();
@@ -90,7 +91,7 @@ public class ActionBarImageFragment extends Fragment {
             elements[i] = "row " + i;
         }
 
-        mListView.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, elements));
+        mListView.setAdapter(new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, elements));
 
     }
 

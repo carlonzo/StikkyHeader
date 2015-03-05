@@ -39,7 +39,8 @@ public class MainFragment extends Fragment {
             "Parallax Simple Stikky Header",
             "ActionBarImage Header Animator",
             "I/O 2014 Header Animator",
-            "Fade Out Interpolated Animator"
+            "Recycler View Header",
+            "Scroll View Header"
         };
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, mFrags);
@@ -71,7 +72,11 @@ public class MainFragment extends Fragment {
                         break;
 
                     case 4:
-                        fragment = new FadeOutInterpolatedFragment();
+                        fragment = new RecyclerStikkyFragment();
+                        break;
+
+                    case 5:
+                        fragment = new SimpleScrollViewFragment();
                         break;
 
                 }

@@ -1,5 +1,6 @@
 package it.carlom.stikkyheader.core.animator;
 
+import android.graphics.Point;
 import android.graphics.Rect;
 import android.view.View;
 import android.view.animation.Interpolator;
@@ -15,7 +16,7 @@ public class AnimatorBuilder {
     private List<AnimatorBundle> mListAnimatorBundles;
 
     public AnimatorBuilder() {
-        mListAnimatorBundles = new ArrayList<AnimatorBundle>(2);
+        mListAnimatorBundles = new ArrayList<>(2);
     }
 
     public static AnimatorBuilder create() {
@@ -59,20 +60,27 @@ public class AnimatorBuilder {
         return this;
     }
 
-    public AnimatorBuilder applyTranslation(final View viewToTranslate, final Rect finalRect) {
+    /**
+     * Translate the top-left point of the view to finalPoint
+     *
+     * @param viewToTranslate
+     * @param finalPoint
+     * @return
+     */
+    public AnimatorBuilder applyTranslation(final View viewToTranslate, final Point finalPoint) {
 
-        return applyTranslation(viewToTranslate, finalRect, null);
+        return applyTranslation(viewToTranslate, finalPoint, null);
     }
 
-    public AnimatorBuilder applyTranslation(final View viewToTranslate, final Rect finalRect, final Interpolator interpolator) {
+    public AnimatorBuilder applyTranslation(final View viewToTranslate, final Point finalPoint, final Interpolator interpolator) {
 
         if (viewToTranslate == null) {
             throw new RuntimeException("You passed a null view");
         }
 
-        Rect from = buildViewRect(viewToTranslate);
-        Float translationX = calculateTranslationX(from, finalRect);
-        Float translationY = calculateTranslationY(from, finalRect);
+        final Point from = buildPointView(viewToTranslate);
+        Float translationX = calculateTranslationX(from, finalPoint);
+        Float translationY = calculateTranslationY(from, finalPoint);
 
         return applyTranslation(viewToTranslate, translationX, translationY, interpolator);
     }
@@ -213,6 +221,10 @@ public class AnimatorBuilder {
         return new Rect(view.getLeft(), view.getTop(), view.getRight(), view.getBottom());
     }
 
+    public static Point buildPointView(final View view) {
+        return new Point(view.getLeft(), view.getTop());
+    }
+
     public static float calculateScaleX(final Rect from, final Rect to) {
         return 1f - (float) to.width() / (float) from.width();
     }
@@ -221,12 +233,12 @@ public class AnimatorBuilder {
         return 1f - (float) to.height() / (float) from.height();
     }
 
-    public static float calculateTranslationX(final Rect from, final Rect to) {
-        return to.left - from.left;
+    public static float calculateTranslationX(final Point from, final Point to) {
+        return to.x - from.x;
     }
 
-    public static float calculateTranslationY(final Rect from, final Rect to) {
-        return to.top - from.top;
+    public static float calculateTranslationY(final Point from, final Point to) {
+        return to.y - from.y;
     }
 
     public static class AnimatorBundle {

@@ -1,11 +1,14 @@
 apply plugin: 'com.android.library'
-
 android {
     compileSdkVersion 21
-    buildToolsVersion "21.1.1"
+    buildToolsVersion "21.1.2"
 
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 21
     }
+}
+
+dependencies {
+    compile 'com.android.support:recyclerview-v7:21.0.3'
 }
