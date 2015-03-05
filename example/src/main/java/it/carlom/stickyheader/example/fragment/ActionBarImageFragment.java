@@ -66,8 +66,9 @@ public class ActionBarImageFragment extends Fragment {
                 View mViewToAnimate = getHeader().findViewById(R.id.header_image);
 
                 AnimatorBuilder animatorBuilder = AnimatorBuilder.create()
-                    .applyScale(mViewToAnimate, AnimatorBuilder.buildViewRect(mHomeView))
-                    .applyTranslation(mViewToAnimate, AnimatorBuilder.buildPointView(mHomeView));
+                        .applyScale(mViewToAnimate, AnimatorBuilder.buildViewRect(mHomeView))
+                        .applyTranslation(mViewToAnimate, AnimatorBuilder.buildPointView(mHomeView))
+                        .applyFade(mViewToAnimate, 1f);
 
 
                 return animatorBuilder;
@@ -75,10 +76,10 @@ public class ActionBarImageFragment extends Fragment {
         };
 
         StikkyHeaderBuilder.stickTo(mListView)
-            .setHeader(R.id.header, (ViewGroup) getView())
+                .setHeader(R.id.header, (ViewGroup) getView())
                 .minHeightHeader(250)
-            .animator(animator)
-            .build();
+                .animator(animator)
+                .build();
 
         populateListView();
 

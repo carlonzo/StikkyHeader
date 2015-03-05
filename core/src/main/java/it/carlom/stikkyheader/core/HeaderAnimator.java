@@ -2,6 +2,7 @@ package it.carlom.stikkyheader.core;
 
 
 import android.view.View;
+import android.view.ViewTreeObserver;
 
 public abstract class HeaderAnimator {
 
@@ -26,7 +27,14 @@ public abstract class HeaderAnimator {
         this.mMaxTranslation = maxTranslation;
 
         onAnimatorAttached();
-        onAnimatorReady();
+
+        mHeader.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                mHeader.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                onAnimatorReady();
+            }
+        });
     }
 
     /**
@@ -35,9 +43,14 @@ public abstract class HeaderAnimator {
     protected abstract void onAnimatorAttached();
 
     /**
-     * Called after that the animator is attached and ready
+     * Called after that the animator is attached and the header measured
      */
     protected abstract void onAnimatorReady();
+
+    void setHeightHeader(int heightHeader, int maxTranslation) {
+        mHeightHeader = heightHeader;
+        mMaxTranslation = maxTranslation;
+    }
 
     public View getHeader() {
         return mHeader;
