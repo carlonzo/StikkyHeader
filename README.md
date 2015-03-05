@@ -3,7 +3,7 @@ StikkyHeader
 
 This is a very simple library for Android that allows you to stick an header to a ListView and easily apply animation to it
 
-## Using
+## Usage
 
 To use the StikkyHeader library, you just need 3 lines:
 
@@ -53,12 +53,33 @@ and then set the animator to the StikkyHeader:
     .build();
 ```
 
-## ViewGroup supported
+## ViewGroups supported
 
 The StikkyHeader supports:
 - ListView
 - RecyclerView
 - ScrollView
+
+## How to integrate
+
+Grab via Gradle:
+```groovy
+repositories {
+  maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+}
+dependencies {
+  compile 'com.github.carlonzo.stikkyheader:core:0.0.1-SNAPSHOT'
+}
+```
+
+or via Maven:
+```xml
+<dependency>
+  <groupId>com.github.carlonzo.stikkyheader</groupId>
+  <artifactId>core</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+</dependency>
+```
 
 ## Video
 
