@@ -85,3 +85,8 @@ or via Maven:
 
 ![Example 1](https://raw.githubusercontent.com/carlonzo/StikkyHeader/develop/readme/example1.gif)
 ![Example 2](https://raw.githubusercontent.com/carlonzo/StikkyHeader/develop/readme/example2.gif)
+
+## Demo
+
+here the [link][1] to the emulator to try few examples.
+[1]: https://appetize.io/embed/urptay0fdprc9dp3xzk6e41g70?screenOnly=false&scale=75
