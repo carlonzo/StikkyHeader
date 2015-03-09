@@ -15,6 +15,8 @@ public class AnimatorBuilder {
 
     private List<AnimatorBundle> mListAnimatorBundles;
 
+    private float mLastTranslationApplied = Float.NaN;
+
     public AnimatorBuilder() {
         mListAnimatorBundles = new ArrayList<>(2);
     }
@@ -180,6 +182,12 @@ public class AnimatorBuilder {
     }
 
     protected void animateOnScroll(final float boundedRatioTranslationY, final float translationY) {
+
+        if (mLastTranslationApplied == boundedRatioTranslationY) {
+            return;
+        }
+
+        mLastTranslationApplied = boundedRatioTranslationY;
 
         for (AnimatorBuilder.AnimatorBundle animatorBundle : mListAnimatorBundles) {
 
