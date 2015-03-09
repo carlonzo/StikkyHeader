@@ -2,10 +2,8 @@ package it.carlom.stikkyheader.core.animator;
 
 public class HeaderStikkyAnimator extends BaseStickyHeaderAnimator {
 
-    private float mBoundedTranslatedRatio;
-
     protected AnimatorBuilder mAnimatorBuilder;
-
+    private float mBoundedTranslatedRatio;
     private boolean hasAnimatorBundles = false;
 
     @Override
@@ -34,7 +32,7 @@ public class HeaderStikkyAnimator extends BaseStickyHeaderAnimator {
 
     }
 
-    public float getBoundedTransletedRatio() {
+    public float getBoundedTranslatedRatio() {
         return mBoundedTranslatedRatio;
     }
 }

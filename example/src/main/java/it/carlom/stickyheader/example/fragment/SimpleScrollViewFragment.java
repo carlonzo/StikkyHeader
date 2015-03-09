@@ -52,9 +52,9 @@ public class SimpleScrollViewFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         StikkyHeaderBuilder.stickTo(mScrollView)
-            .setHeader(R.id.header, (FrameLayout) getView())
-            .minHeightHeaderPixel(250)
-            .build();
+                .setHeader(R.id.header, (FrameLayout) getView())
+                .minHeightHeader(250)
+                .build();
 
 
     }

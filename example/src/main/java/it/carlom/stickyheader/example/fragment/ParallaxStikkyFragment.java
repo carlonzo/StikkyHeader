@@ -54,23 +54,13 @@ public class ParallaxStikkyFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         StikkyHeaderBuilder.stickTo(mListView)
-            .setHeader(R.id.header, (ViewGroup) getView())
-            .minHeightHeaderRes(R.dimen.min_height_header)
-            .animator(new ParallaxStikkyAnimator())
-            .build();
+                .setHeader(R.id.header, (ViewGroup) getView())
+                .minHeightHeaderDim(R.dimen.min_height_header)
+                .animator(new ParallaxStikkyAnimator())
+                .build();
 
         populateListView();
 
-    }
-
-    private class ParallaxStikkyAnimator extends HeaderStikkyAnimator {
-
-        @Override
-        public AnimatorBuilder getAnimatorBuilder() {
-            View mHeader_image = getHeader().findViewById(R.id.header_image);
-
-            return AnimatorBuilder.create().applyVerticalParallax(mHeader_image);
-        }
     }
 
     private void populateListView() {
@@ -82,6 +72,16 @@ public class ParallaxStikkyFragment extends Fragment {
 
         mListView.setAdapter(new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, elements));
 
+    }
+
+    private class ParallaxStikkyAnimator extends HeaderStikkyAnimator {
+
+        @Override
+        public AnimatorBuilder getAnimatorBuilder() {
+            View mHeader_image = getHeader().findViewById(R.id.header_image);
+
+            return AnimatorBuilder.create().applyVerticalParallax(mHeader_image);
+        }
     }
 
 }

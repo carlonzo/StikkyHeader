@@ -57,10 +57,10 @@ public class IO2014HeaderFragment extends Fragment {
         IO2014HeaderAnimator animator = new IO2014HeaderAnimator(getActivity());
 
         StikkyHeaderBuilder.stickTo(mListView)
-            .setHeader(R.id.header, (ViewGroup) getView())
-            .minHeightHeaderRes(R.dimen.min_height_header_materiallike)
-            .animator(animator)
-            .build();
+                .setHeader(R.id.header, (ViewGroup) getView())
+                .minHeightHeaderDim(R.dimen.min_height_header_materiallike)
+                .animator(animator)
+                .build();
 
         populateListView();
     }
