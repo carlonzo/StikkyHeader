@@ -68,7 +68,7 @@ repositories {
   maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
 }
 dependencies {
-  compile 'com.github.carlonzo.stikkyheader:core:0.0.1-SNAPSHOT'
+  compile 'com.github.carlonzo.stikkyheader:core:0.0.2-SNAPSHOT'
 }
 ```
 
