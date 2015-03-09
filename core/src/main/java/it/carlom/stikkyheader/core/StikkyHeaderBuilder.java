@@ -4,12 +4,9 @@ package it.carlom.stikkyheader.core;
 import android.content.Context;
 import android.support.annotation.DimenRes;
 import android.support.annotation.IdRes;
-import android.support.annotation.LayoutRes;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.ScrollView;
 
@@ -50,12 +47,28 @@ public abstract class StikkyHeaderBuilder {
         return this;
     }
 
+    /**
+     * Deprecated: use {@link #minHeightHeaderDim(int)}
+     */
+    @Deprecated
     public StikkyHeaderBuilder minHeightHeaderRes(@DimenRes final int resDimension) {
+        return minHeightHeaderDim(resDimension);
+    }
+
+    public StikkyHeaderBuilder minHeightHeaderDim(@DimenRes final int resDimension) {
         mMinHeight = mContext.getResources().getDimensionPixelSize(resDimension);
         return this;
     }
 
+    /**
+     * Deprecated: use {@link #minHeightHeader(int)}
+     */
+    @Deprecated
     public StikkyHeaderBuilder minHeightHeaderPixel(final int minHeight) {
+        return minHeightHeader(minHeight);
+    }
+
+    public StikkyHeaderBuilder minHeightHeader(final int minHeight) {
         mMinHeight = minHeight;
         return this;
     }

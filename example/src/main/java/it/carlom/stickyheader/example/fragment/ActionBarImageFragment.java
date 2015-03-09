@@ -76,7 +76,7 @@ public class ActionBarImageFragment extends Fragment {
 
         StikkyHeaderBuilder.stickTo(mListView)
             .setHeader(R.id.header, (ViewGroup) getView())
-            .minHeightHeaderPixel(250)
+                .minHeightHeader(250)
             .animator(animator)
             .build();
 

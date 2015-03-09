@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ListView;
+import android.widget.Space;
 
 public class StikkyHeaderListView extends StikkyHeader {
 
@@ -34,7 +35,7 @@ public class StikkyHeaderListView extends StikkyHeader {
 
     protected void createFakeHeader() {
 
-        mFakeHeader = new View(mContext);
+        mFakeHeader = new Space(mContext);
         mFakeHeader.setVisibility(View.INVISIBLE);
 
         AbsListView.LayoutParams lp = new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0);

@@ -45,7 +45,7 @@ public class RecyclerStikkyFragment extends Fragment {
 
         StikkyHeaderBuilder.stickTo(mRecyclerView)
             .setHeader(R.id.header, (ViewGroup) getView())
-            .minHeightHeaderRes(R.dimen.min_height_header)
+                .minHeightHeaderDim(R.dimen.min_height_header)
             .build();
 
         populateListView();
