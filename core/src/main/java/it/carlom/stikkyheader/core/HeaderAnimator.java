@@ -8,18 +8,22 @@ public abstract class HeaderAnimator {
     private View mHeader;
     private int mMinHeightHeader;
     private int mHeightHeader;
-    private int mMaxTransaction;
+    private int mMaxTranslation;
+
+    public static float clamp(float value, float min, float max) {
+        return Math.max(min, Math.min(value, max));
+    }
 
     public abstract void onScroll(final int scrolledY);
 
     /**
      * Called by the {@link it.carlom.stikkyheader.core.StikkyHeader} to set the {@link HeaderAnimator} up
      */
-    void setupAnimator(final View header, final int minHeightHeader, final int heightHeader, final int maxTransaction) {
+    void setupAnimator(final View header, final int minHeightHeader, final int heightHeader, final int maxTranslation) {
         this.mHeader = header;
         this.mMinHeightHeader = minHeightHeader;
         this.mHeightHeader = heightHeader;
-        this.mMaxTransaction = maxTransaction;
+        this.mMaxTranslation = maxTranslation;
 
         onAnimatorAttached();
         onAnimatorReady();
@@ -47,11 +51,7 @@ public abstract class HeaderAnimator {
         return mHeightHeader;
     }
 
-    public int getMaxTransaction() {
-        return mMaxTransaction;
-    }
-
-    public static float clamp(float value, float min, float max) {
-        return Math.max(min, Math.min(value, max));
+    public int getMaxTranslation() {
+        return mMaxTranslation;
     }
 }
