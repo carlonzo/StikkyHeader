@@ -25,11 +25,10 @@ public abstract class StikkyHeader {
             mHeader.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                 @Override
                 public void onGlobalLayout() {
+                    mHeader.getViewTreeObserver().removeGlobalOnLayoutListener(this);
                     int height = mHeader.getHeight();
-                    if (height > 0) {
-                        mHeader.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                        setHeightHeader(height);
-                    }
+                    setHeightHeader(height);
+
                 }
             });
         } else {
@@ -53,7 +52,7 @@ public abstract class StikkyHeader {
         mHeader.setLayoutParams(lpHeader);
 
         calculateMaxTranslation();
-        setupAnimator(); // update heights
+        mHeaderAnimator.setHeightHeader(mHeightHeader, mMaxHeaderTranslation);
     }
 
     private void calculateMaxTranslation() {

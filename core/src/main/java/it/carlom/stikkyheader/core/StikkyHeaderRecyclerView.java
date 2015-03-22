@@ -55,7 +55,7 @@ public class StikkyHeaderRecyclerView extends StikkyHeader {
                         public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
                             super.getItemOffsets(outRect, view, parent, state);
 
-                            int position = parent.getChildPosition(view);
+                            int position = parent.getChildLayoutPosition(view);
 
                             if (position < ((GridLayoutManager) layoutManager).getSpanCount()) {
                                 outRect.top = mHeightHeader;
@@ -82,7 +82,7 @@ public class StikkyHeaderRecyclerView extends StikkyHeader {
                         public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
                             super.getItemOffsets(outRect, view, parent, state);
 
-                            int position = parent.getChildPosition(view);
+                            int position = parent.getChildLayoutPosition(view);
 
                             if (position == 0) {
                                 outRect.top = mHeightHeader;
