@@ -21,19 +21,32 @@ public abstract class StikkyHeader {
         int height = mHeader.getHeight();
 
         if (height == 0) {
-            //waiting for the height
-            mHeader.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                @Override
-                public void onGlobalLayout() {
-                    mHeader.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                    int height = mHeader.getHeight();
-                    setHeightHeader(height);
+            final ViewGroup.LayoutParams lp = mHeader.getLayoutParams();
+            if (lp != null) {
+                height = lp.height;
+            }
 
-                }
-            });
-        } else {
-            setHeightHeader(height);
+/*
+            here the height can be:
+            1. 0 -> height not ready (hoping that the real height is not zero!)
+            2. -1/-2 -> MATCHPARENT OR WRAPCONTENT. we should wait for it
+*/
+            if (height <= 0) {
+                //waiting for the height
+                mHeader.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                    @Override
+                    public void onGlobalLayout() {
+                        mHeader.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                        int height = mHeader.getHeight();
+                        setHeightHeader(height);
+
+                    }
+                });
+                return;
+            }
         }
+
+        setHeightHeader(height);
 
     }
 
@@ -61,7 +74,7 @@ public abstract class StikkyHeader {
 
     protected void setupAnimator() {
 
-        mHeaderAnimator.setupAnimator(mHeader, mMinHeightHeader, mHeightHeader, mMaxHeaderTranslation);
+        mHeaderAnimator.setupAnimator(mHeader, mMinHeightHeader);
     }
 
 

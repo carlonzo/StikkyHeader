@@ -20,11 +20,9 @@ public abstract class HeaderAnimator {
     /**
      * Called by the {@link it.carlom.stikkyheader.core.StikkyHeader} to set the {@link HeaderAnimator} up
      */
-    void setupAnimator(final View header, final int minHeightHeader, final int heightHeader, final int maxTranslation) {
+    void setupAnimator(final View header, final int minHeightHeader) {
         this.mHeader = header;
         this.mMinHeightHeader = minHeightHeader;
-        this.mHeightHeader = heightHeader;
-        this.mMaxTranslation = maxTranslation;
 
         onAnimatorAttached();
 
