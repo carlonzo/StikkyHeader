@@ -1,8 +1,8 @@
 package it.carlom.stickyheader.example.fragment;
 
 
-import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,18 +36,6 @@ public class SimpleScrollViewFragment extends Fragment {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        getActivity().getActionBar().hide();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        getActivity().getActionBar().show();
-    }
-
-    @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
@@ -55,7 +43,6 @@ public class SimpleScrollViewFragment extends Fragment {
                 .setHeader(R.id.header, (FrameLayout) getView())
                 .minHeightHeader(250)
                 .build();
-
 
     }
 

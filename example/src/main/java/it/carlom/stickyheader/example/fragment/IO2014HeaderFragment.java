@@ -1,8 +1,8 @@
 package it.carlom.stickyheader.example.fragment;
 
 
-import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,20 +34,6 @@ public class IO2014HeaderFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         mListView = (ListView) getView().findViewById(R.id.listview);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        getActivity().getActionBar().hide();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-
-        getActivity().getActionBar().show();
     }
 
     @Override

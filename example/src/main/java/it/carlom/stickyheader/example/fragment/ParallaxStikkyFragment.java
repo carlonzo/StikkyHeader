@@ -1,7 +1,7 @@
 package it.carlom.stickyheader.example.fragment;
 
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,18 +35,6 @@ public class ParallaxStikkyFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         mListView = (ListView) view.findViewById(R.id.listview);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        getActivity().getActionBar().hide();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        getActivity().getActionBar().show();
     }
 
     @Override
