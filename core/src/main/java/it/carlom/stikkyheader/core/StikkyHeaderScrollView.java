@@ -10,17 +10,10 @@ public class StikkyHeaderScrollView extends StikkyHeader {
 
     private ScrollView mScrollView;
 
-    StikkyHeaderScrollView(final Context context, final ScrollView scrollView, final View header, final int mMinHeightHeader, final HeaderAnimator headerAnimator) {
-
-        this.mContext = context;
+    StikkyHeaderScrollView(final Context context, final ScrollView scrollView, final View header, final int minHeightHeader, final HeaderAnimator headerAnimator) {
+        super(context, scrollView, header, minHeightHeader, headerAnimator);
         this.mScrollView = scrollView;
-        this.mHeader = header;
-        this.mMinHeightHeader = mMinHeightHeader;
-        this.mHeaderAnimator = headerAnimator;
-
-        init();
     }
-
 
     protected void init() {
         setupAnimator();
@@ -35,10 +28,10 @@ public class StikkyHeaderScrollView extends StikkyHeader {
         // creating a placeholder adding a padding to the scrollview behind the header
 
         mScrollView.setPadding(
-            mScrollView.getPaddingLeft(),
-            mScrollView.getPaddingTop() + heightHeader,
-            mScrollView.getPaddingRight(),
-            mScrollView.getPaddingBottom()
+                mScrollView.getPaddingLeft(),
+                mScrollView.getPaddingTop() + heightHeader,
+                mScrollView.getPaddingRight(),
+                mScrollView.getPaddingBottom()
         );
 
         mScrollView.setClipToPadding(false);

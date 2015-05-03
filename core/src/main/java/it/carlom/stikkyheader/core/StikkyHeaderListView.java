@@ -2,29 +2,23 @@ package it.carlom.stikkyheader.core;
 
 
 import android.content.Context;
+import android.support.v4.widget.Space;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ListView;
-import android.widget.Space;
 
 public class StikkyHeaderListView extends StikkyHeader {
 
     private final ListView mListView;
     private AbsListView.OnScrollListener mDelegateOnScrollListener;
 
-    StikkyHeaderListView(final Context context, final ListView listView, final View header, final int mMinHeightHeader, final HeaderAnimator headerAnimator) {
-
-        this.mContext = context;
+    StikkyHeaderListView(final Context context, final ListView listView, final View header, final int minHeightHeader, final HeaderAnimator headerAnimator) {
+        super(context, listView, header, minHeightHeader, headerAnimator);
         this.mListView = listView;
-        this.mHeader = header;
-        this.mMinHeightHeader = mMinHeightHeader;
-        this.mHeaderAnimator = headerAnimator;
-
-        init();
     }
 
-    private void init() {
+    protected void init() {
         createFakeHeader();
         measureHeaderHeight();
         setupAnimator();
