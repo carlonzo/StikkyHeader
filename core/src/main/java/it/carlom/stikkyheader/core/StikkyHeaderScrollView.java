@@ -23,8 +23,8 @@ public class StikkyHeaderScrollView extends StikkyHeader {
 
 
     protected void init() {
-        measureHeaderHeight();
         setupAnimator();
+        measureHeaderHeight();
         setupOnScrollListener();
     }
 

@@ -82,14 +82,13 @@ public class StikkyHeaderListView extends StikkyHeader {
             //TODO support more than 1 header?
 
             int firstVisiblePosition = mListView.getFirstVisiblePosition();
-            int top = c.getTop();
 
             int headerHeight = 0;
             if (firstVisiblePosition >= 1) { //TODO >= number of header
                 headerHeight = mHeightHeader;
             }
 
-            return -top + firstVisiblePosition * c.getHeight() + headerHeight;
+            return -c.getTop() + firstVisiblePosition * c.getHeight() + headerHeight;
         }
 
     }

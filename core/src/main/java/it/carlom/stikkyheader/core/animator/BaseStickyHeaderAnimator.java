@@ -30,6 +30,7 @@ public class BaseStickyHeaderAnimator extends HeaderAnimator {
     }
 
     private float calculateTranslationRatio(int scrolledY) {
+        //TODO check divisor != 0
         return (float) scrolledY / (float) getMaxTranslation();
     }
 
