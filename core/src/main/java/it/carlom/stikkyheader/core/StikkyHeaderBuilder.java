@@ -19,11 +19,15 @@ public abstract class StikkyHeaderBuilder {
     protected View mHeader;
     protected int mMinHeight;
     protected HeaderAnimator mAnimator;
+    protected boolean mAllowTouchBehindHeader;
 
     protected StikkyHeaderBuilder(final Context context) {
         mContext = context;
         mMinHeight = 0;
+        mAllowTouchBehindHeader = false;
     }
+
+    public abstract StikkyHeader build();
 
     public static ListViewBuilder stickTo(final ListView listView) {
         return new ListViewBuilder(listView);
@@ -78,7 +82,15 @@ public abstract class StikkyHeaderBuilder {
         return this;
     }
 
-    public abstract StikkyHeader build();
+    /**
+     * Allows the touch of the views behind the StikkyHeader. by default is false
+     *
+     * @param allow true to allow the touch behind the StikkyHeader, false to allow only the scroll.
+     */
+    public StikkyHeaderBuilder allowTouchBehindHeader(boolean allow) {
+        mAllowTouchBehindHeader = allow;
+        return this;
+    }
 
     public static class ListViewBuilder extends StikkyHeaderBuilder {
 
@@ -97,7 +109,10 @@ public abstract class StikkyHeaderBuilder {
                 mAnimator = new HeaderStikkyAnimator();
             }
 
-            return new StikkyHeaderListView(mContext, mListView, mHeader, mMinHeight, mAnimator);
+            final StikkyHeaderListView stikkyHeaderListView = new StikkyHeaderListView(mContext, mListView, mHeader, mMinHeight, mAnimator);
+            stikkyHeaderListView.build(mAllowTouchBehindHeader);
+
+            return stikkyHeaderListView;
         }
     }
 
@@ -118,7 +133,10 @@ public abstract class StikkyHeaderBuilder {
                 mAnimator = new HeaderStikkyAnimator();
             }
 
-            return new StikkyHeaderRecyclerView(mContext, mRecyclerView, mHeader, mMinHeight, mAnimator);
+            final StikkyHeaderRecyclerView stikkyHeaderRecyclerView = new StikkyHeaderRecyclerView(mContext, mRecyclerView, mHeader, mMinHeight, mAnimator);
+            stikkyHeaderRecyclerView.build(mAllowTouchBehindHeader);
+
+            return stikkyHeaderRecyclerView;
         }
 
     }
@@ -140,7 +158,11 @@ public abstract class StikkyHeaderBuilder {
                 mAnimator = new HeaderStikkyAnimator();
             }
 
-            return new StikkyHeaderScrollView(mContext, mScrollView, mHeader, mMinHeight, mAnimator);
+            final StikkyHeaderScrollView stikkyHeaderScrollView = new StikkyHeaderScrollView(mContext, mScrollView, mHeader, mMinHeight, mAnimator);
+
+            stikkyHeaderScrollView.build(mAllowTouchBehindHeader);
+
+            return stikkyHeaderScrollView;
         }
 
     }

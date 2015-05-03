@@ -14,19 +14,12 @@ public class StikkyHeaderRecyclerView extends StikkyHeader {
     private int mScrolledY;
     private OnScrollListenerStikky mOnScrollerListenerStikky;
 
-    StikkyHeaderRecyclerView(final Context context, final RecyclerView recyclerView, final View header, final int mMinHeightHeader, final HeaderAnimator headerAnimator) {
-
-        this.mContext = context;
+    StikkyHeaderRecyclerView(final Context context, final RecyclerView recyclerView, final View header, final int minHeightHeader, final HeaderAnimator headerAnimator) {
+        super(context, recyclerView, header, minHeightHeader, headerAnimator);
         this.mRecyclerView = recyclerView;
-        this.mHeader = header;
-        this.mMinHeightHeader = mMinHeightHeader;
-        this.mHeaderAnimator = headerAnimator;
-        this.mScrolledY = 0;
-
-        init();
     }
 
-    private void init() {
+    protected void init() {
         setupAnimator();
         measureHeaderHeight();
     }
