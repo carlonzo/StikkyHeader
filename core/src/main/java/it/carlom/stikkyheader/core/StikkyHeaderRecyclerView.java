@@ -5,6 +5,7 @@ import android.graphics.Rect;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 
 
@@ -37,7 +38,32 @@ public class StikkyHeaderRecyclerView extends StikkyHeader {
 
         final RecyclerView.LayoutManager layoutManager = mRecyclerView.getLayoutManager();
 
-        if (layoutManager instanceof GridLayoutManager) {
+        if (layoutManager instanceof StaggeredGridLayoutManager) {
+            int orientation = ((StaggeredGridLayoutManager) layoutManager).getOrientation();
+
+            switch (orientation) {
+                case StaggeredGridLayoutManager.VERTICAL:
+                    mRecyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
+                        @Override
+                        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+                            super.getItemOffsets(outRect, view, parent, state);
+
+                            int position = parent.getChildAdapterPosition(view);
+
+                            if (position < ((StaggeredGridLayoutManager) layoutManager).getSpanCount()) {
+                                outRect.top = mHeightHeader;
+                            }
+                        }
+                    });
+
+                    break;
+
+                case StaggeredGridLayoutManager.HORIZONTAL:
+                    //TODO implement horizontal support
+                    throw new IllegalStateException("Horizontal StaggeredGridLayoutManager not supported");
+            }
+
+        } else if (layoutManager instanceof GridLayoutManager) {
 
             int orientation = ((GridLayoutManager) layoutManager).getOrientation();
 
