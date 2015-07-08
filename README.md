@@ -68,7 +68,7 @@ repositories {
   maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
 }
 dependencies {
-  compile 'com.github.carlonzo.stikkyheader:core:0.0.2-SNAPSHOT'
+  compile 'com.github.carlonzo.stikkyheader:core:0.0.3-SNAPSHOT'
 }
 ```
 
@@ -77,7 +77,7 @@ or via Maven:
 <dependency>
   <groupId>com.github.carlonzo.stikkyheader</groupId>
   <artifactId>core</artifactId>
-  <version>0.0.2-SNAPSHOT</version>
+  <version>0.0.3-SNAPSHOT</version>
 </dependency>
 ```
 
