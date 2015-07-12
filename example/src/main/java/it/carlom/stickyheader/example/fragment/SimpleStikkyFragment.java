@@ -40,9 +40,9 @@ public class SimpleStikkyFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         StikkyHeaderBuilder.stickTo(mListView)
-            .setHeader(R.id.header, (ViewGroup) getView())
+                .setHeader(R.id.header, (ViewGroup) getView())
                 .minHeightHeader(250)
-            .build();
+                .build();
 
 
         populateListView();

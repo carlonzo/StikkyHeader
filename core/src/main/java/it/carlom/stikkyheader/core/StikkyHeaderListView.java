@@ -12,6 +12,7 @@ public class StikkyHeaderListView extends StikkyHeader {
 
     private final ListView mListView;
     private AbsListView.OnScrollListener mDelegateOnScrollListener;
+    private View mFakeHeader;
 
     StikkyHeaderListView(final Context context, final ListView listView, final View header, final int minHeightHeader, final HeaderAnimator headerAnimator) {
         super(context, listView, header, minHeightHeader, headerAnimator);
@@ -34,6 +35,15 @@ public class StikkyHeaderListView extends StikkyHeader {
         mFakeHeader.setLayoutParams(lp);
 
         mListView.addHeaderView(mFakeHeader);
+    }
+
+    @Override
+    protected void setHeightHeader(int heightHeader) {
+        super.setHeightHeader(heightHeader);
+
+        ViewGroup.LayoutParams lpFakeHeader = mFakeHeader.getLayoutParams();
+        lpFakeHeader.height = mHeightHeader;
+        mFakeHeader.setLayoutParams(lpFakeHeader);
     }
 
     private void setStickyOnScrollListener() {
