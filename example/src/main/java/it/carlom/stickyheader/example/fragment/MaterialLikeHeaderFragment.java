@@ -113,14 +113,12 @@ public class MaterialLikeHeaderFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         StikkyHeaderBuilder.stickTo(mListView)
-            .setHeader(mHeader)
+                .setHeader(mHeader)
                 .minHeightHeaderDim(R.dimen.toolbar_height)
-            .animator(mMaterialLikeAnimator)
-            .build();
+                .animator(mMaterialLikeAnimator)
+                .build();
 
     }
-
-
 
 
 }
