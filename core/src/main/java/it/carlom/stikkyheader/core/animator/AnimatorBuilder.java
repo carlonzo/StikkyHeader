@@ -5,6 +5,8 @@ import android.graphics.Rect;
 import android.view.View;
 import android.view.animation.Interpolator;
 
+import com.nineoldandroids.view.ViewHelper;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -58,8 +60,8 @@ public class AnimatorBuilder {
             throw new IllegalArgumentException("Scale animation already added");
         }
 
-        float startScaleX = viewToScale.getScaleX();
-        float startScaleY = viewToScale.getScaleY();
+        float startScaleX = ViewHelper.getScaleX(viewToScale);
+        float startScaleY = ViewHelper.getScaleY(viewToScale);
 
         if (scaleX == scaleY && startScaleX == startScaleY) {
 
@@ -109,8 +111,8 @@ public class AnimatorBuilder {
             throw new IllegalArgumentException("You passed a null view");
         }
 
-        float startTranslationX = viewToTranslate.getTranslationX();
-        float startTranslationY = viewToTranslate.getTranslationY();
+        float startTranslationX = ViewHelper.getTranslationX(viewToTranslate);
+        float startTranslationY = ViewHelper.getTranslationY(viewToTranslate);
 
         AnimatorBundle animatorTranslationX = AnimatorBundle.create(AnimatorBundle.TypeAnimation.TRANSLATIONX, viewToTranslate, interpolator, startTranslationX, translateX);
         AnimatorBundle animatorTranslationY = AnimatorBundle.create(AnimatorBundle.TypeAnimation.TRANSLATIONY, viewToTranslate, interpolator, startTranslationY, translateY);
@@ -132,7 +134,7 @@ public class AnimatorBuilder {
             throw new IllegalArgumentException("You passed a null view");
         }
 
-        float startAlpha = viewToFade.getAlpha();
+        float startAlpha = ViewHelper.getAlpha(viewToFade);
 
         addAnimator(AnimatorBundle.create(AnimatorBundle.TypeAnimation.FADE, viewToFade, interpolator, startAlpha, fade));
 
@@ -236,26 +238,27 @@ public class AnimatorBuilder {
             switch (animatorBundle.mTypeAnimation) {
 
                 case SCALEX:
-                    animatorBundle.mView.setScaleX(valueAnimation);
+                    ViewHelper.setScaleX(animatorBundle.mView,valueAnimation);
                     break;
                 case SCALEY:
-                    animatorBundle.mView.setScaleY(valueAnimation);
+                    ViewHelper.setScaleY(animatorBundle.mView,valueAnimation);
                     break;
                 case SCALEXY:
-                    animatorBundle.mView.setScaleX(valueAnimation);
-                    animatorBundle.mView.setScaleY(valueAnimation);
+                    ViewHelper.setScaleX(animatorBundle.mView, valueAnimation);
+                    ViewHelper.setScaleY(animatorBundle.mView, valueAnimation);
                     break;
                 case FADE:
-                    animatorBundle.mView.setAlpha(valueAnimation); //TODO performance issues?
+                    //TODO performance issues?
+                    ViewHelper.setAlpha(animatorBundle.mView,valueAnimation);
                     break;
                 case TRANSLATIONX:
-                    animatorBundle.mView.setTranslationX(valueAnimation);
+                    ViewHelper.setTranslationX(animatorBundle.mView,valueAnimation);
                     break;
                 case TRANSLATIONY:
-                    animatorBundle.mView.setTranslationY(valueAnimation - translationY);
+                    ViewHelper.setTranslationY(animatorBundle.mView,valueAnimation - translationY);
                     break;
                 case PARALLAX:
-                    animatorBundle.mView.setTranslationY(animatorBundle.mDelta * translationY);
+                    ViewHelper.setTranslationY(animatorBundle.mView, animatorBundle.mDelta * translationY);
                     break;
 
             }
