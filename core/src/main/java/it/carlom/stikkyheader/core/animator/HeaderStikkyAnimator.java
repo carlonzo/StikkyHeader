@@ -1,5 +1,7 @@
 package it.carlom.stikkyheader.core.animator;
 
+import com.nineoldandroids.view.ViewHelper;
+
 public class HeaderStikkyAnimator extends BaseStickyHeaderAnimator {
 
     protected AnimatorBuilder mAnimatorBuilder;
@@ -27,7 +29,7 @@ public class HeaderStikkyAnimator extends BaseStickyHeaderAnimator {
         mBoundedTranslatedRatio = clamp(getTranslationRatio(), 0f, 1f);
 
         if (hasAnimatorBundles) {
-            mAnimatorBuilder.animateOnScroll(mBoundedTranslatedRatio, getHeader().getTranslationY());
+            mAnimatorBuilder.animateOnScroll(mBoundedTranslatedRatio, ViewHelper.getTranslationY(getHeader()));
         }
 
     }

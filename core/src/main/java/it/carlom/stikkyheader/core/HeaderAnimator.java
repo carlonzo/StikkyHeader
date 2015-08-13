@@ -1,6 +1,7 @@
 package it.carlom.stikkyheader.core;
 
 
+import android.os.Build;
 import android.view.View;
 import android.view.ViewTreeObserver;
 
@@ -29,7 +30,7 @@ public abstract class HeaderAnimator {
         mHeader.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                mHeader.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                removeGlobalLayoutListener(this,mHeader);
                 onAnimatorReady();
             }
         });
@@ -64,5 +65,14 @@ public abstract class HeaderAnimator {
 
     public int getMaxTranslation() {
         return mMaxTranslation;
+    }
+
+    public static void removeGlobalLayoutListener(ViewTreeObserver.OnGlobalLayoutListener victim,View view) {
+        if (Build.VERSION.SDK_INT >= 16) {
+            view.getViewTreeObserver().removeOnGlobalLayoutListener(victim);
+        } else {
+            //noinspection deprecation
+            view.getViewTreeObserver().removeGlobalOnLayoutListener(victim);
+        }
     }
 }

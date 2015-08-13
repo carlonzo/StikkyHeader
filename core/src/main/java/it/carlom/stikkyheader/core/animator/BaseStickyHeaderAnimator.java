@@ -1,5 +1,7 @@
 package it.carlom.stikkyheader.core.animator;
 
+import com.nineoldandroids.view.ViewHelper;
+
 import it.carlom.stikkyheader.core.HeaderAnimator;
 
 
@@ -20,7 +22,7 @@ public class BaseStickyHeaderAnimator extends HeaderAnimator {
     @Override
     public void onScroll(int scrolledY) {
 
-        getHeader().setTranslationY(Math.max(scrolledY, getMaxTranslation()));
+        ViewHelper.setTranslationY(getHeader(),Math.max(scrolledY, getMaxTranslation()));
 
         mTranslationRatio = calculateTranslationRatio(scrolledY);
     }

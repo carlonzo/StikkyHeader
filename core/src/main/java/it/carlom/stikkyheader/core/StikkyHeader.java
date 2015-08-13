@@ -1,11 +1,15 @@
 package it.carlom.stikkyheader.core;
 
 import android.content.Context;
+import android.os.Build;
+import android.preference.PreferenceActivity;
 import android.support.v4.view.MotionEventCompat;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+
+import com.nineoldandroids.view.ViewHelper;
 
 public abstract class StikkyHeader {
 
@@ -57,13 +61,13 @@ public abstract class StikkyHeader {
 
                             if (!mDownEventDispatched) {
                                 // if moving, create a fake down event for the scrollingView to start the scroll. the y of the touch in the listview is the y coordinate of the touch in the header + the translation of the header
-                                final MotionEvent downEvent = MotionEvent.obtain(event.getDownTime() - 1, event.getEventTime() - 1, MotionEvent.ACTION_DOWN, event.getX(), event.getY() + mHeader.getTranslationY(), 0);
+                                final MotionEvent downEvent = MotionEvent.obtain(event.getDownTime() - 1, event.getEventTime() - 1, MotionEvent.ACTION_DOWN, event.getX(), event.getY() + ViewHelper.getTranslationY(mHeader), 0);
                                 mScrollingView.dispatchTouchEvent(downEvent);
                                 mDownEventDispatched = true;
                             }
 
                             //dispatching the move event. we need to create a fake motionEvent using a different y coordinate related to the listview
-                            final MotionEvent moveEvent = MotionEvent.obtain(event.getDownTime(), event.getEventTime(), MotionEvent.ACTION_MOVE, event.getX(), event.getY() + mHeader.getTranslationY(), 0);
+                            final MotionEvent moveEvent = MotionEvent.obtain(event.getDownTime(), event.getEventTime(), MotionEvent.ACTION_MOVE, event.getX(), event.getY() + ViewHelper.getTranslationY(mHeader), 0);
                             mScrollingView.dispatchTouchEvent(moveEvent);
 
                             break;
@@ -112,7 +116,7 @@ public abstract class StikkyHeader {
                 mHeader.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                     @Override
                     public void onGlobalLayout() {
-                        mHeader.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                        HeaderAnimator.removeGlobalLayoutListener(this,mHeader);
                         int height = mHeader.getHeight();
                         setHeightHeader(height);
 

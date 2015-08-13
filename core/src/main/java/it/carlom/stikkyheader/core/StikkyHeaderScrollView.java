@@ -52,7 +52,7 @@ public class StikkyHeaderScrollView extends StikkyHeader {
         mScrollView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                mScrollView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                HeaderAnimator.removeGlobalLayoutListener(this, mScrollView);
                 mHeaderAnimator.onScroll(-mScrollView.getScrollY());
             }
         });
