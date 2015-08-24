@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -82,7 +83,6 @@ public class MaterialLikeHeaderFragment extends Fragment {
 
 
     public MaterialLikeHeaderFragment() {
-        // Required empty public constructor
     }
 
     @Override
@@ -100,7 +100,7 @@ public class MaterialLikeHeaderFragment extends Fragment {
         mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
         mHeader = (FrameLayout) view.findViewById(R.id.header);
 
-        ((ActionBarActivity) getActivity()).setSupportActionBar(mToolbar);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
         ActionBar actionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);

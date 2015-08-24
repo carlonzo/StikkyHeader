@@ -41,6 +41,10 @@ public abstract class StikkyHeaderBuilder {
         return new ScrollViewBuilder(scrollView);
     }
 
+    public static TargetBuilder stickTo(final Context context) {
+        return new TargetBuilder(context);
+    }
+
     public StikkyHeaderBuilder setHeader(@IdRes final int idHeader, final ViewGroup view) {
         mHeader = view.findViewById(idHeader);
         return this;
@@ -163,6 +167,31 @@ public abstract class StikkyHeaderBuilder {
             stikkyHeaderScrollView.build(mAllowTouchBehindHeader);
 
             return stikkyHeaderScrollView;
+        }
+
+    }
+
+    public static class TargetBuilder extends StikkyHeaderBuilder {
+
+        private final Context mContext;
+
+        protected TargetBuilder(final Context context) {
+            super(context);
+            mContext = context;
+        }
+
+        @Override
+        public StikkyHeaderTarget build() {
+
+            //if the animator has not been set, the default one is used
+            if (mAnimator == null) {
+                mAnimator = new HeaderStikkyAnimator();
+            }
+
+            final StikkyHeaderTarget stikkyHeaderTarget = new StikkyHeaderTarget(mContext, mHeader, mMinHeight, mAnimator);
+            stikkyHeaderTarget.build(mAllowTouchBehindHeader);
+
+            return stikkyHeaderTarget;
         }
 
     }

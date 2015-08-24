@@ -15,20 +15,22 @@ public class StikkyHeaderListView extends StikkyHeader {
     private View mFakeHeader;
 
     StikkyHeaderListView(final Context context, final ListView listView, final View header, final int minHeightHeader, final HeaderAnimator headerAnimator) {
-        super(context, listView, header, minHeightHeader, headerAnimator);
+        super(context, header, minHeightHeader, headerAnimator);
         this.mListView = listView;
+    }
+
+    @Override
+    protected View getScrollingView() {
+        return mListView;
     }
 
     protected void init() {
         createFakeHeader();
-        measureHeaderHeight();
-        setupAnimator();
+        super.init();
         setStickyOnScrollListener();
     }
 
-
-    protected void createFakeHeader() {
-
+    private void createFakeHeader() {
         mFakeHeader = new Space(mContext);
 
         AbsListView.LayoutParams lp = new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0);
@@ -47,10 +49,8 @@ public class StikkyHeaderListView extends StikkyHeader {
     }
 
     private void setStickyOnScrollListener() {
-
         StickyOnScrollListener mStickyOnScrollListener = new StickyOnScrollListener();
         mListView.setOnScrollListener(mStickyOnScrollListener);
-
     }
 
     private class StickyOnScrollListener implements AbsListView.OnScrollListener {
@@ -70,7 +70,7 @@ public class StikkyHeaderListView extends StikkyHeader {
             mScrolledYList = -calculateScrollYList();
 
             //notify the animator
-            mHeaderAnimator.onScroll(mScrolledYList);
+            StikkyHeaderListView.this.onScroll(mScrolledYList);
 
             if (mDelegateOnScrollListener != null) {
                 mDelegateOnScrollListener.onScroll(view, firstVisibleItem, visibleItemCount, totalItemCount);
@@ -100,6 +100,5 @@ public class StikkyHeaderListView extends StikkyHeader {
     public void setOnScrollListener(final AbsListView.OnScrollListener onScrollListener) {
         mDelegateOnScrollListener = onScrollListener;
     }
-
 
 }
