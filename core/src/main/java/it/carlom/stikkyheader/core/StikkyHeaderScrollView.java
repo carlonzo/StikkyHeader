@@ -11,13 +11,17 @@ public class StikkyHeaderScrollView extends StikkyHeader {
     private ScrollView mScrollView;
 
     StikkyHeaderScrollView(final Context context, final ScrollView scrollView, final View header, final int minHeightHeader, final HeaderAnimator headerAnimator) {
-        super(context, scrollView, header, minHeightHeader, headerAnimator);
+        super(context, header, minHeightHeader, headerAnimator);
         this.mScrollView = scrollView;
     }
 
+    @Override
+    protected View getScrollingView() {
+        return mScrollView;
+    }
+
     protected void init() {
-        setupAnimator();
-        measureHeaderHeight();
+        super.init();
         setupOnScrollListener();
     }
 
@@ -25,8 +29,7 @@ public class StikkyHeaderScrollView extends StikkyHeader {
     protected void setHeightHeader(int heightHeader) {
         super.setHeightHeader(heightHeader);
 
-        // creating a placeholder adding a padding to the scrollview behind the header
-
+        // create a placeholder adding a padding to the scrollview behind the header
         mScrollView.setPadding(
                 mScrollView.getPaddingLeft(),
                 mScrollView.getPaddingTop() + heightHeader,
@@ -42,21 +45,17 @@ public class StikkyHeaderScrollView extends StikkyHeader {
         mScrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
             @Override
             public void onScrollChanged() {
-
-                mHeaderAnimator.onScroll(-mScrollView.getScrollY());
-
+                onScroll(-mScrollView.getScrollY());
             }
         });
 
         //init scroll listener when the view is ready
-        mScrollView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+        StikkyHeaderUtils.executeOnGlobalLayout(mScrollView, new Runnable() {
             @Override
-            public void onGlobalLayout() {
-                mScrollView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-                mHeaderAnimator.onScroll(-mScrollView.getScrollY());
+            public void run() {
+                onScroll(-mScrollView.getScrollY());
             }
         });
-
     }
 
 

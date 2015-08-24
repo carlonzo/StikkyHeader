@@ -6,10 +6,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import it.carlom.stickyheader.example.R;
+import it.carlom.stickyheader.example.Utils;
 import it.carlom.stickyheader.example.animator.IO2014HeaderAnimator;
 import it.carlom.stikkyheader.core.StikkyHeaderBuilder;
 
@@ -18,7 +18,6 @@ public class IO2014HeaderFragment extends Fragment {
     private ListView mListView;
 
     public IO2014HeaderFragment() {
-        // Required empty public constructor
     }
 
 
@@ -48,17 +47,7 @@ public class IO2014HeaderFragment extends Fragment {
                 .animator(animator)
                 .build();
 
-        populateListView();
-    }
-
-    private void populateListView() {
-
-        String[] elements = new String[500];
-        for (int i = 0; i < elements.length; i++) {
-            elements[i] = "row " + i;
-        }
-
-        mListView.setAdapter(new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, elements));
+        Utils.populateListView(mListView);
     }
 
 }

@@ -17,7 +17,6 @@ public class SimpleScrollViewFragment extends Fragment {
     private ScrollView mScrollView;
 
     public SimpleScrollViewFragment() {
-        // Required empty public constructor
     }
 
 

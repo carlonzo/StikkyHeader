@@ -1,15 +1,13 @@
 package it.carlom.stikkyheader.core;
 
-
 import android.view.View;
-import android.view.ViewTreeObserver;
 
 public abstract class HeaderAnimator {
 
     private View mHeader;
     private int mMinHeightHeader;
     private int mHeightHeader;
-    private int mMaxTranslation;
+    private int mMaxHeaderTranslation;
 
     public static float clamp(float value, float min, float max) {
         return Math.max(min, Math.min(value, max));
@@ -20,16 +18,14 @@ public abstract class HeaderAnimator {
     /**
      * Called by the {@link it.carlom.stikkyheader.core.StikkyHeader} to set the {@link HeaderAnimator} up
      */
-    void setupAnimator(final View header, final int minHeightHeader) {
+    void setupAnimator(final View header) {
         this.mHeader = header;
-        this.mMinHeightHeader = minHeightHeader;
 
         onAnimatorAttached();
 
-        mHeader.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+        StikkyHeaderUtils.executeOnGlobalLayout(mHeader, new Runnable() {
             @Override
-            public void onGlobalLayout() {
-                mHeader.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+            public void run() {
                 onAnimatorReady();
             }
         });
@@ -45,9 +41,14 @@ public abstract class HeaderAnimator {
      */
     protected abstract void onAnimatorReady();
 
-    void setHeightHeader(int heightHeader, int maxTranslation) {
+    void setHeightHeader(int heightHeader, int minHeightHeader) {
         mHeightHeader = heightHeader;
-        mMaxTranslation = maxTranslation;
+        mMinHeightHeader = minHeightHeader;
+        calculateMaxTranslation();
+    }
+
+    private void calculateMaxTranslation() {
+        mMaxHeaderTranslation = mMinHeightHeader - mHeightHeader;
     }
 
     public View getHeader() {
@@ -63,6 +64,6 @@ public abstract class HeaderAnimator {
     }
 
     public int getMaxTranslation() {
-        return mMaxTranslation;
+        return mMaxHeaderTranslation;
     }
 }
