@@ -94,4 +94,8 @@ public abstract class StikkyHeader {
         return mHeader;
     }
 
+    public View getHeader() {
+        return mHeader;
+    }
+
 }

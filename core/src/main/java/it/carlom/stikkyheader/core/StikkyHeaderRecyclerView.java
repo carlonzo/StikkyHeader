@@ -14,6 +14,7 @@ public class StikkyHeaderRecyclerView extends StikkyHeader {
     private RecyclerView mRecyclerView;
     private int mScrolledY;
     private OnScrollListenerStikky mOnScrollerListenerStikky;
+    private RecyclerView.ItemDecoration mItemDecoration;
 
     StikkyHeaderRecyclerView(final Context context, final RecyclerView recyclerView, final View header, final int minHeightHeader, final HeaderAnimator headerAnimator) {
         super(context, header, minHeightHeader, headerAnimator);
@@ -34,6 +35,10 @@ public class StikkyHeaderRecyclerView extends StikkyHeader {
         setupOnScrollListener();
     }
 
+    public RecyclerView.ItemDecoration getItemDecoration() {
+        return mItemDecoration;
+    }
+
     private void setupItemDecorator() {
 
         final RecyclerView.LayoutManager layoutManager = mRecyclerView.getLayoutManager();
@@ -43,7 +48,7 @@ public class StikkyHeaderRecyclerView extends StikkyHeader {
 
             switch (orientation) {
                 case StaggeredGridLayoutManager.VERTICAL:
-                    mRecyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
+                    mItemDecoration = new RecyclerView.ItemDecoration() {
                         @Override
                         public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
                             super.getItemOffsets(outRect, view, parent, state);
@@ -54,7 +59,8 @@ public class StikkyHeaderRecyclerView extends StikkyHeader {
                                 outRect.top = mHeightHeader;
                             }
                         }
-                    });
+                    };
+                    mRecyclerView.addItemDecoration(mItemDecoration);
 
                     break;
 
@@ -69,7 +75,7 @@ public class StikkyHeaderRecyclerView extends StikkyHeader {
 
             switch (orientation) {
                 case LinearLayoutManager.VERTICAL:
-                    mRecyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
+                    mItemDecoration = new RecyclerView.ItemDecoration() {
                         @Override
                         public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
                             super.getItemOffsets(outRect, view, parent, state);
@@ -80,7 +86,8 @@ public class StikkyHeaderRecyclerView extends StikkyHeader {
                                 outRect.top = mHeightHeader;
                             }
                         }
-                    });
+                    };
+                    mRecyclerView.addItemDecoration(mItemDecoration);
 
                     break;
 
@@ -95,8 +102,7 @@ public class StikkyHeaderRecyclerView extends StikkyHeader {
 
             switch (orientation) {
                 case LinearLayoutManager.VERTICAL:
-
-                    mRecyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
+                    mItemDecoration = new RecyclerView.ItemDecoration() {
                         @Override
                         public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
                             super.getItemOffsets(outRect, view, parent, state);
@@ -105,7 +111,8 @@ public class StikkyHeaderRecyclerView extends StikkyHeader {
                                 outRect.top = mHeightHeader;
                             }
                         }
-                    });
+                    };
+                    mRecyclerView.addItemDecoration(mItemDecoration);
 
                     break;
 
