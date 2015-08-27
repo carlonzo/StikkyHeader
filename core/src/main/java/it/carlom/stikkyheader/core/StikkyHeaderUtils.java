@@ -24,7 +24,6 @@ public class StikkyHeaderUtils {
 
     }
 
-
     public static void removeOnGlobalLayoutListener(View view, ViewTreeObserver.OnGlobalLayoutListener victim) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
             //noinspection deprecation
@@ -67,13 +66,13 @@ public class StikkyHeaderUtils {
 
                             if (!mDownEventDispatched) {
                                 // if moving, create a fake down event for the scrollingView to start the scroll. the y of the touch in the scrolling view is the y coordinate of the touch in the header + the translation of the header
-                                final MotionEvent downEvent = MotionEvent.obtain(event.getDownTime() - 1, event.getEventTime() - 1, MotionEvent.ACTION_DOWN, event.getX(), event.getY() + header.getTranslationY(), 0);
+                                final MotionEvent downEvent = MotionEvent.obtain(event.getDownTime() - 1, event.getEventTime() - 1, MotionEvent.ACTION_DOWN, event.getX(), event.getY() + StikkyCompat.getTranslationY(header), 0);
                                 scrollingView.dispatchTouchEvent(downEvent);
                                 mDownEventDispatched = true;
                             }
 
                             //dispatching the move event. we need to create a fake motionEvent using a different y coordinate related to the scrolling view
-                            final MotionEvent moveEvent = MotionEvent.obtain(event.getDownTime(), event.getEventTime(), MotionEvent.ACTION_MOVE, event.getX(), event.getY() + header.getTranslationY(), 0);
+                            final MotionEvent moveEvent = MotionEvent.obtain(event.getDownTime(), event.getEventTime(), MotionEvent.ACTION_MOVE, event.getX(), event.getY() + StikkyCompat.getTranslationY(header), 0);
                             scrollingView.dispatchTouchEvent(moveEvent);
 
                             break;
@@ -101,6 +100,31 @@ public class StikkyHeaderUtils {
             }
         });
 
+    }
+
+    static boolean hasNineOld() {
+        try {
+            Class.forName("com.nineoldandroids.view.ViewHelper");
+            return true;
+        } catch (ClassNotFoundException ignored) {
+            return false;
+        }
+    }
+
+    static boolean hasRecyclerView() {
+        try {
+            Class.forName("android.support.v7.widget.RecyclerView");
+            return true;
+        } catch (ClassNotFoundException ignored) {
+            return false;
+        }
+    }
+
+    public static void checkRecyclerView() {
+        if (!hasRecyclerView()) {
+            throw new NoClassDefFoundError("RecyclerView is not on classpath, " +
+                    "make sure that you have it in your dependencies");
+        }
     }
 
 }

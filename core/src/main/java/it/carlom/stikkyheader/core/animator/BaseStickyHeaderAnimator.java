@@ -1,6 +1,7 @@
 package it.carlom.stikkyheader.core.animator;
 
 import it.carlom.stikkyheader.core.HeaderAnimator;
+import it.carlom.stikkyheader.core.StikkyCompat;
 
 
 public class BaseStickyHeaderAnimator extends HeaderAnimator {
@@ -19,9 +20,7 @@ public class BaseStickyHeaderAnimator extends HeaderAnimator {
 
     @Override
     public void onScroll(int scrolledY) {
-
-        getHeader().setTranslationY(Math.max(scrolledY, getMaxTranslation()));
-
+        StikkyCompat.setTranslationY(getHeader(), Math.max(scrolledY, getMaxTranslation()));
         mTranslationRatio = calculateTranslationRatio(scrolledY);
     }
 

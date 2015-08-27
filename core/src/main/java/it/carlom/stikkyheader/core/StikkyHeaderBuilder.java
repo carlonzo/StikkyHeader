@@ -34,6 +34,7 @@ public abstract class StikkyHeaderBuilder {
     }
 
     public static RecyclerViewBuilder stickTo(final RecyclerView recyclerView) {
+        StikkyHeaderUtils.checkRecyclerView();
         return new RecyclerViewBuilder(recyclerView);
     }
 

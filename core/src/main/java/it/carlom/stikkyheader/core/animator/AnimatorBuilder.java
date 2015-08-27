@@ -8,6 +8,8 @@ import android.view.animation.Interpolator;
 import java.util.HashSet;
 import java.util.Set;
 
+import it.carlom.stikkyheader.core.StikkyCompat;
+
 public class AnimatorBuilder {
 
     public static final float DEFAULT_VELOCITY_ANIMATOR = 0.5f;
@@ -30,7 +32,6 @@ public class AnimatorBuilder {
 
 
     public AnimatorBuilder applyScale(View viewToScale, Rect finalRect, Interpolator interpolator) {
-
         if (viewToScale == null) {
             throw new IllegalArgumentException("You passed a null view");
         }
@@ -47,7 +48,6 @@ public class AnimatorBuilder {
     }
 
     public AnimatorBuilder applyScale(View viewToScale, float scaleX, float scaleY, Interpolator interpolator) {
-
         if (viewToScale == null) {
             throw new IllegalArgumentException("You passed a null view");
         }
@@ -58,8 +58,8 @@ public class AnimatorBuilder {
             throw new IllegalArgumentException("Scale animation already added");
         }
 
-        float startScaleX = viewToScale.getScaleX();
-        float startScaleY = viewToScale.getScaleY();
+        float startScaleX = StikkyCompat.getScaleX(viewToScale);
+        float startScaleY = StikkyCompat.getScaleY(viewToScale);
 
         if (scaleX == scaleY && startScaleX == startScaleY) {
 
@@ -87,7 +87,6 @@ public class AnimatorBuilder {
      * Translate the top-left point of the view to finalPoint
      */
     public AnimatorBuilder applyTranslation(View viewToTranslate, Point finalPoint, Interpolator interpolator) {
-
         if (viewToTranslate == null) {
             throw new IllegalArgumentException("You passed a null view");
         }
@@ -104,13 +103,12 @@ public class AnimatorBuilder {
     }
 
     public AnimatorBuilder applyTranslation(View viewToTranslate, float translateX, float translateY, Interpolator interpolator) {
-
         if (viewToTranslate == null) {
             throw new IllegalArgumentException("You passed a null view");
         }
 
-        float startTranslationX = viewToTranslate.getTranslationX();
-        float startTranslationY = viewToTranslate.getTranslationY();
+        float startTranslationX = StikkyCompat.getTranslationX(viewToTranslate);
+        float startTranslationY = StikkyCompat.getTranslationY(viewToTranslate);
 
         AnimatorBundle animatorTranslationX = AnimatorBundle.create(AnimatorBundle.TypeAnimation.TRANSLATIONX, viewToTranslate, interpolator, startTranslationX, translateX);
         AnimatorBundle animatorTranslationY = AnimatorBundle.create(AnimatorBundle.TypeAnimation.TRANSLATIONY, viewToTranslate, interpolator, startTranslationY, translateY);
@@ -127,13 +125,11 @@ public class AnimatorBuilder {
     }
 
     public AnimatorBuilder applyFade(View viewToFade, float fade, Interpolator interpolator) {
-
         if (viewToFade == null) {
             throw new IllegalArgumentException("You passed a null view");
         }
 
-        float startAlpha = viewToFade.getAlpha();
-
+        float startAlpha = StikkyCompat.getAlpha(viewToFade);
         addAnimator(AnimatorBundle.create(AnimatorBundle.TypeAnimation.FADE, viewToFade, interpolator, startAlpha, fade));
 
         return this;
@@ -149,7 +145,6 @@ public class AnimatorBuilder {
      * @return
      */
     public AnimatorBuilder applyVerticalParallax(View viewToParallax, float velocityParallax) {
-
         if (viewToParallax == null) {
             throw new IllegalArgumentException("You passed a null view");
         }
@@ -160,7 +155,6 @@ public class AnimatorBuilder {
     }
 
     private void addAnimator(AnimatorBundle... animators) {
-
         boolean added = true;
 
         for (AnimatorBundle animator : animators) {
@@ -177,7 +171,6 @@ public class AnimatorBuilder {
      * called after a new scale or translation animation has been added
      */
     private void adjustTranslation(View viewAnimated) {
-
         AnimatorBundle animatorScaleX = null;
         AnimatorBundle animatorScaleY = null;
         AnimatorBundle animatorTranslationX = null;
@@ -221,7 +214,6 @@ public class AnimatorBuilder {
     }
 
     protected void animateOnScroll(float boundedRatioTranslationY, float translationY) {
-
         if (mLastTranslationApplied == boundedRatioTranslationY) {
             return;
         }
@@ -236,26 +228,26 @@ public class AnimatorBuilder {
             switch (animatorBundle.mTypeAnimation) {
 
                 case SCALEX:
-                    animatorBundle.mView.setScaleX(valueAnimation);
+                    StikkyCompat.setScaleX(animatorBundle.mView, valueAnimation);
                     break;
                 case SCALEY:
-                    animatorBundle.mView.setScaleY(valueAnimation);
+                    StikkyCompat.setScaleY(animatorBundle.mView, valueAnimation);
                     break;
                 case SCALEXY:
-                    animatorBundle.mView.setScaleX(valueAnimation);
-                    animatorBundle.mView.setScaleY(valueAnimation);
+                    StikkyCompat.setScaleX(animatorBundle.mView, valueAnimation);
+                    StikkyCompat.setScaleY(animatorBundle.mView, valueAnimation);
                     break;
                 case FADE:
-                    animatorBundle.mView.setAlpha(valueAnimation); //TODO performance issues?
+                    StikkyCompat.setAlpha(animatorBundle.mView, valueAnimation);  //TODO performance issues?
                     break;
                 case TRANSLATIONX:
-                    animatorBundle.mView.setTranslationX(valueAnimation);
+                    StikkyCompat.setTranslationX(animatorBundle.mView, valueAnimation);
                     break;
                 case TRANSLATIONY:
-                    animatorBundle.mView.setTranslationY(valueAnimation - translationY);
+                    StikkyCompat.setTranslationY(animatorBundle.mView, valueAnimation);
                     break;
                 case PARALLAX:
-                    animatorBundle.mView.setTranslationY(animatorBundle.mDelta * translationY);
+                    StikkyCompat.setTranslationY(animatorBundle.mView, animatorBundle.mDelta * translationY);
                     break;
 
             }
@@ -294,7 +286,6 @@ public class AnimatorBuilder {
     }
 
     private boolean hasAnimation(final View view, AnimatorBundle.TypeAnimation... typeAnimations) {
-
         for (AnimatorBundle animator : mSetAnimatorBundles) {
             if (animator.mView == view) {
                 for (AnimatorBundle.TypeAnimation typeAnimation : typeAnimations) {
