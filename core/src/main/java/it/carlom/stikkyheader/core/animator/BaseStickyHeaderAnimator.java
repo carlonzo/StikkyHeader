@@ -20,7 +20,7 @@ public class BaseStickyHeaderAnimator extends HeaderAnimator {
 
     @Override
     public void onScroll(int scrolledY) {
-        StikkyCompat.setTranslationY(getHeader(), Math.max(scrolledY, getMaxTranslation()));
+        StikkyCompat.setTranslationY(mHeader, Math.max(scrolledY, getMaxTranslation()));
         mTranslationRatio = calculateTranslationRatio(scrolledY);
     }
 

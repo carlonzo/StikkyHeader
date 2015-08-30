@@ -155,16 +155,11 @@ public class AnimatorBuilder {
     }
 
     private void addAnimator(AnimatorBundle... animators) {
-        boolean added = true;
-
         for (AnimatorBundle animator : animators) {
-            added &= mSetAnimatorBundles.add(animator);
+            if (!mSetAnimatorBundles.add(animator)) {
+                throw new IllegalArgumentException("Animation " + animator.mTypeAnimation + " already added to this view");
+            }
         }
-
-        if (!added) {
-            throw new IllegalArgumentException("Animation already added to this view");
-        }
-
     }
 
     /**
@@ -244,7 +239,7 @@ public class AnimatorBuilder {
                     StikkyCompat.setTranslationX(animatorBundle.mView, valueAnimation);
                     break;
                 case TRANSLATIONY:
-                    StikkyCompat.setTranslationY(animatorBundle.mView, valueAnimation);
+                    StikkyCompat.setTranslationY(animatorBundle.mView, valueAnimation - translationY);
                     break;
                 case PARALLAX:
                     StikkyCompat.setTranslationY(animatorBundle.mView, animatorBundle.mDelta * translationY);

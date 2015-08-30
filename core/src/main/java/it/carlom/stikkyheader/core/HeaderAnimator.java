@@ -4,7 +4,7 @@ import android.view.View;
 
 public abstract class HeaderAnimator {
 
-    private View mHeader;
+    protected View mHeader;
     private int mMinHeightHeader;
     private int mHeightHeader;
     private int mMaxHeaderTranslation;
