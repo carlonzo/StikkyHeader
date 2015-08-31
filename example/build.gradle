@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "it.carlom.stickyheader.example"
-        minSdkVersion 14
+        minSdkVersion 7
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -16,5 +16,4 @@ android {
 dependencies {
     compile project(':core')
     compile 'com.android.support:appcompat-v7:23.0.0'
-    compile 'com.android.support:cardview-v7:23.0.0'
 }

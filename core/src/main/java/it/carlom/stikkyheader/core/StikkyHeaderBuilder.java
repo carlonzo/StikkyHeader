@@ -1,6 +1,5 @@
 package it.carlom.stikkyheader.core;
 
-
 import android.content.Context;
 import android.support.annotation.DimenRes;
 import android.support.annotation.IdRes;
@@ -33,8 +32,8 @@ public abstract class StikkyHeaderBuilder {
         return new ListViewBuilder(listView);
     }
 
-    public static RecyclerViewBuilder stickTo(final RecyclerView recyclerView) {
-        StikkyHeaderUtils.checkRecyclerView();
+    public static RecyclerViewBuilder stickTo(final ViewGroup recyclerView) {
+        StikkyHeaderUtils.checkRecyclerView(recyclerView);
         return new RecyclerViewBuilder(recyclerView);
     }
 
@@ -125,9 +124,9 @@ public abstract class StikkyHeaderBuilder {
 
         private final RecyclerView mRecyclerView;
 
-        protected RecyclerViewBuilder(final RecyclerView mRecyclerView) {
+        protected RecyclerViewBuilder(final ViewGroup mRecyclerView) {
             super(mRecyclerView.getContext());
-            this.mRecyclerView = mRecyclerView;
+            this.mRecyclerView = (RecyclerView) mRecyclerView;
         }
 
         @Override

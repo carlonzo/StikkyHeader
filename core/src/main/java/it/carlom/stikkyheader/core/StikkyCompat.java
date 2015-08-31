@@ -38,7 +38,7 @@ public class StikkyCompat {
         } else if (StikkyHeaderUtils.hasNineOld()) {
             IMPL = new NineOldImpl();
         } else {
-            IMPL = new BaseImpl();
+            throw new RuntimeException("StikkyHeader cannot be used on API < 11 without the NineOldAndroids library");
         }
     }
 
@@ -80,58 +80,6 @@ public class StikkyCompat {
 
     public static float getAlpha(View view) {
         return IMPL.getAlpha(view);
-    }
-
-
-    private static class BaseImpl implements StikkyCompatImpl {
-
-        @Override
-        public float getTranslationX(View view) {
-            return 0;
-        }
-
-        @Override
-        public float getTranslationY(View view) {
-            return 0;
-        }
-
-        @Override
-        public void setTranslationX(View view, float value) {
-        }
-
-        @Override
-        public void setTranslationY(View view, float value) {
-        }
-
-        @Override
-        public void setScaleX(View view, float value) {
-
-        }
-
-        @Override
-        public void setScaleY(View view, float value) {
-
-        }
-
-        @Override
-        public float getScaleX(View view) {
-            return 0;
-        }
-
-        @Override
-        public float getScaleY(View view) {
-            return 0;
-        }
-
-        @Override
-        public void setAlpha(View view, float value) {
-
-        }
-
-        @Override
-        public float getAlpha(View view) {
-            return 0;
-        }
     }
 
     private static class NineOldImpl implements StikkyCompatImpl {

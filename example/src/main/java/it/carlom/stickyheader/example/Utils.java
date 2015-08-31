@@ -48,9 +48,7 @@ public class Utils {
 
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-
             View view = LayoutInflater.from(mContext).inflate(android.R.layout.simple_list_item_1, viewGroup, false);
-
             return new ViewHolder(view);
         }
 

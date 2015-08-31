@@ -17,18 +17,29 @@
 apply plugin: 'maven'
 apply plugin: 'signing'
 
+def useLocalRepository() {
+    return true;
+}
+
 def isReleaseBuild() {
     return VERSION_NAME.contains("SNAPSHOT") == false
 }
 
+def getLocalRepositoryUrl() {
+    def deployTo = new File(rootDir, "repository")
+    return "file://${deployTo}"
+}
+
 def getReleaseRepositoryUrl() {
-    return hasProperty('RELEASE_REPOSITORY_URL') ? RELEASE_REPOSITORY_URL
-            : "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+    return useLocalRepository() ? getLocalRepositoryUrl() :
+            (hasProperty('RELEASE_REPOSITORY_URL') ? RELEASE_REPOSITORY_URL
+                    : "https://oss.sonatype.org/service/local/staging/deploy/maven2/")
 }
 
 def getSnapshotRepositoryUrl() {
-    return hasProperty('SNAPSHOT_REPOSITORY_URL') ? SNAPSHOT_REPOSITORY_URL
-            : "https://oss.sonatype.org/content/repositories/snapshots/"
+    return useLocalRepository() ? getLocalRepositoryUrl() :
+            (hasProperty('SNAPSHOT_REPOSITORY_URL') ? SNAPSHOT_REPOSITORY_URL
+                    : "https://oss.sonatype.org/content/repositories/snapshots/")
 }
 
 def getRepositoryUsername() {
@@ -38,6 +49,7 @@ def getRepositoryUsername() {
 def getRepositoryPassword() {
     return hasProperty('NEXUS_PASSWORD') ? NEXUS_PASSWORD : ""
 }
+
 
 afterEvaluate { project ->
     uploadArchives {

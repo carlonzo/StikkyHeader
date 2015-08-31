@@ -3,14 +3,17 @@ package it.carlom.stikkyheader.core;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.view.MotionEventCompat;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 
 import java.lang.ref.WeakReference;
 
 public class StikkyHeaderUtils {
+
+    private static final String RECYCLERVIEW_CLASS_NAME = "android.support.v7.widget.RecyclerView";
+    private static final String NINEOLDANDROIDS_CLASS_NAME = "com.nineoldandroids.view.ViewHelper";
 
     public static void executeOnGlobalLayout(View view, final Runnable runnable) {
         final WeakReference<View> viewReference = new WeakReference<>(view);
@@ -58,7 +61,7 @@ public class StikkyHeaderUtils {
                 final View scrollingView = scrollingViewReference.get();
 
                 if (scrollingView != null) {
-                    switch (MotionEventCompat.getActionMasked(event)) {
+                    switch (event.getAction()) {
 
                         case MotionEvent.ACTION_MOVE:
 
@@ -104,7 +107,7 @@ public class StikkyHeaderUtils {
 
     static boolean hasNineOld() {
         try {
-            Class.forName("com.nineoldandroids.view.ViewHelper");
+            Class.forName(NINEOLDANDROIDS_CLASS_NAME);
             return true;
         } catch (ClassNotFoundException ignored) {
             return false;
@@ -113,14 +116,29 @@ public class StikkyHeaderUtils {
 
     static boolean hasRecyclerView() {
         try {
-            Class.forName("android.support.v7.widget.RecyclerView");
+            Class.forName(RECYCLERVIEW_CLASS_NAME);
             return true;
         } catch (ClassNotFoundException ignored) {
             return false;
         }
     }
 
-    public static void checkRecyclerView() {
+    public static void checkRecyclerView(ViewGroup recyclerView) {
+        checkRecyclerViewOnClassPath();
+
+        Class clazz = recyclerView.getClass();
+        while (clazz != null) {
+            if (clazz.getName().equals(RECYCLERVIEW_CLASS_NAME)) {
+                return;
+            }
+            clazz = clazz.getSuperclass();
+        }
+
+        throw new IllegalArgumentException("ViewGroup " + recyclerView.getClass().getName() + " not supported");
+
+    }
+
+    public static void checkRecyclerViewOnClassPath() {
         if (!hasRecyclerView()) {
             throw new NoClassDefFoundError("RecyclerView is not on classpath, " +
                     "make sure that you have it in your dependencies");
