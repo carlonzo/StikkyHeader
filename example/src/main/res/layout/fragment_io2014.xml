@@ -25,7 +25,7 @@
             android:id="@+id/header_text_layout"
             android:layout_width="match_parent"
             android:layout_height="@dimen/min_height_textheader_materiallike"
-            android:background="@android:color/holo_green_light"
+            android:background="@color/holo_green_light"
             android:layout_gravity="bottom">
 
             <TextView
