@@ -23,6 +23,7 @@ public class StikkyHeaderScrollView extends StikkyHeader {
     protected void init() {
         super.init();
         setupOnScrollListener();
+        mScrollView.setClipToPadding(false);
     }
 
     @Override
@@ -36,8 +37,6 @@ public class StikkyHeaderScrollView extends StikkyHeader {
                 mScrollView.getPaddingRight(),
                 mScrollView.getPaddingBottom()
         );
-
-        mScrollView.setClipToPadding(false);
     }
 
     private void setupOnScrollListener() {

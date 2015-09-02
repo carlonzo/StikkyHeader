@@ -44,7 +44,7 @@ public class StikkyHeaderListView extends StikkyHeader {
         super.setHeightHeader(heightHeader);
 
         ViewGroup.LayoutParams lpFakeHeader = mFakeHeader.getLayoutParams();
-        lpFakeHeader.height = mHeightHeader;
+        lpFakeHeader.height = heightHeader;
         mFakeHeader.setLayoutParams(lpFakeHeader);
     }
 

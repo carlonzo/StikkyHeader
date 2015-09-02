@@ -3,6 +3,7 @@ package it.carlom.stikkyheader.core;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 
 public abstract class StikkyHeader {
 
@@ -42,29 +43,24 @@ public abstract class StikkyHeader {
         int height = mHeader.getHeight();
 
         if (height == 0) {
-            final ViewGroup.LayoutParams lp = mHeader.getLayoutParams();
+            ViewGroup.LayoutParams lp = mHeader.getLayoutParams();
             if (lp != null) {
                 height = lp.height;
             }
-
-            /*
-            here the height can be:
-            1. 0 -> height not ready
-            2. -1/-2 -> MATCH_PARENT OR WRAP_CONTENT. we should wait for it
-            */
-            if (height <= 0) {
-                //waiting for the height
-                StikkyHeaderUtils.executeOnGlobalLayout(mHeader, new Runnable() {
-                    @Override
-                    public void run() {
-                        setHeightHeader(mHeader.getHeight());
-                    }
-                });
-                return;
-            }
         }
 
-        setHeightHeader(height);
+        if (height > 0) {
+            setHeightHeader(height);
+        }
+
+        mHeader.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                if (mHeightHeader != mHeader.getHeight()) {
+                    setHeightHeader(mHeader.getHeight());
+                }
+            }
+        });
     }
 
     protected void setHeightHeader(final int heightHeader) {
