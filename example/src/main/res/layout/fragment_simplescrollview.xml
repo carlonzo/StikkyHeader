@@ -1,8 +1,8 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout android:id="@+id/layout_container"
+             xmlns:android="http://schemas.android.com/apk/res/android"
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:id="@+id/layout_container">
+             android:layout_height="match_parent">
 
     <ScrollView
         android:id="@+id/scroll"
@@ -18,12 +18,12 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="400dp"
-                android:background="@android:color/holo_blue_bright"/>
+                android:background="@color/holo_blue_light"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
-                android:background="@android:color/holo_red_light"/>
+                android:background="@color/holo_red_light"/>
 
         </LinearLayout>
 
@@ -33,13 +33,13 @@
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="@dimen/max_height_header"
-        android:background="@android:color/holo_green_dark">
+        android:background="@color/holo_green_dark">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/hello_world"
             android:layout_gravity="center"
+            android:text="Hello World!!"
             android:textSize="23sp"/>
 
     </FrameLayout>

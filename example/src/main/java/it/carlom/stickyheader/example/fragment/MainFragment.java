@@ -17,7 +17,6 @@ public class MainFragment extends Fragment {
 
 
     public MainFragment() {
-        // Required empty public constructor
     }
 
 
@@ -35,13 +34,15 @@ public class MainFragment extends Fragment {
         ListView listView = (ListView) getView().findViewById(R.id.listview);
 
         String[] mFrags = {
-            "Simple Stikky Header",
-            "Parallax Simple Stikky Header",
-            "ActionBarImage Header Animator",
-            "I/O 2014 Header Animator",
+                "Simple Stikky Header",
+                "Parallax Simple Stikky Header",
+                "ActionBarImage Header Animator",
+                "I/O 2014 Header Animator",
 //            "MaterialLike Animator",
-            "Recycler View Header",
-            "Scroll View Header"
+                "Recycler View Header",
+                "Scroll View Header",
+                "Target Header",
+
         };
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, mFrags);
@@ -82,12 +83,14 @@ public class MainFragment extends Fragment {
                         fragment = new SimpleScrollViewFragment();
                         break;
 
+                    case 6:
+                        fragment = new TargetStikkyFragment();
+                        break;
+
                 }
 
-                ((MainActivity) getActivity()).loadFragment(fragment);
+                ((MainActivity) getActivity()).loadFragment(fragment, true);
             }
         });
-
-
     }
 }

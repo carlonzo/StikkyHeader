@@ -2,12 +2,13 @@ package it.carlom.stickyheader.example;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 
 import it.carlom.stickyheader.example.fragment.MainFragment;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -15,20 +16,21 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         if (savedInstanceState == null) {
-            loadFragment(new MainFragment());
+            loadFragment(new MainFragment(), false);
         }
 
     }
 
+    public void loadFragment(final Fragment fragment, boolean addToBackStack) {
+        final FragmentTransaction fragmentTransaction = getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.layout_container, fragment, fragment.getClass().getName());
 
-    public void loadFragment(final Fragment fragment) {
+        if (addToBackStack) {
+            fragmentTransaction.addToBackStack(fragment.getClass().getName());
+        }
 
-        getSupportFragmentManager()
-            .beginTransaction()
-            .replace(R.id.layout_container, fragment, fragment.getClass().getName())
-            .addToBackStack(fragment.getClass().getName())
-            .commit();
-
+        fragmentTransaction.commit();
     }
 
 }

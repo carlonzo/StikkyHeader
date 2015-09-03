@@ -27,8 +27,8 @@ public class IconActionBarAnimator extends HeaderStikkyAnimator {
         View mViewToAnimate = getHeader().findViewById(resIdLayoutToAnimate);
 
         AnimatorBuilder animatorBuilder = AnimatorBuilder.create()
-            .applyScale(mViewToAnimate, AnimatorBuilder.buildViewRect(homeActionBar))
-            .applyTranslation(mViewToAnimate, AnimatorBuilder.buildPointView(homeActionBar));
+                .applyScale(mViewToAnimate, AnimatorBuilder.buildViewRect(homeActionBar))
+                .applyTranslation(mViewToAnimate, AnimatorBuilder.buildPointView(homeActionBar));
 
         return animatorBuilder;
     }

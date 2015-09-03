@@ -1,6 +1,5 @@
 package it.carlom.stikkyheader.core;
 
-
 import android.content.Context;
 import android.support.annotation.DimenRes;
 import android.support.annotation.IdRes;
@@ -33,12 +32,17 @@ public abstract class StikkyHeaderBuilder {
         return new ListViewBuilder(listView);
     }
 
-    public static RecyclerViewBuilder stickTo(final RecyclerView recyclerView) {
+    public static RecyclerViewBuilder stickTo(final ViewGroup recyclerView) {
+        StikkyHeaderUtils.checkRecyclerView(recyclerView);
         return new RecyclerViewBuilder(recyclerView);
     }
 
     public static ScrollViewBuilder stickTo(final ScrollView scrollView) {
         return new ScrollViewBuilder(scrollView);
+    }
+
+    public static TargetBuilder stickTo(final Context context) {
+        return new TargetBuilder(context);
     }
 
     public StikkyHeaderBuilder setHeader(@IdRes final int idHeader, final ViewGroup view) {
@@ -120,9 +124,9 @@ public abstract class StikkyHeaderBuilder {
 
         private final RecyclerView mRecyclerView;
 
-        protected RecyclerViewBuilder(final RecyclerView mRecyclerView) {
+        protected RecyclerViewBuilder(final ViewGroup mRecyclerView) {
             super(mRecyclerView.getContext());
-            this.mRecyclerView = mRecyclerView;
+            this.mRecyclerView = (RecyclerView) mRecyclerView;
         }
 
         @Override
@@ -163,6 +167,31 @@ public abstract class StikkyHeaderBuilder {
             stikkyHeaderScrollView.build(mAllowTouchBehindHeader);
 
             return stikkyHeaderScrollView;
+        }
+
+    }
+
+    public static class TargetBuilder extends StikkyHeaderBuilder {
+
+        private final Context mContext;
+
+        protected TargetBuilder(final Context context) {
+            super(context);
+            mContext = context;
+        }
+
+        @Override
+        public StikkyHeaderTarget build() {
+
+            //if the animator has not been set, the default one is used
+            if (mAnimator == null) {
+                mAnimator = new HeaderStikkyAnimator();
+            }
+
+            final StikkyHeaderTarget stikkyHeaderTarget = new StikkyHeaderTarget(mContext, mHeader, mMinHeight, mAnimator);
+            stikkyHeaderTarget.build(mAllowTouchBehindHeader);
+
+            return stikkyHeaderTarget;
         }
 
     }
