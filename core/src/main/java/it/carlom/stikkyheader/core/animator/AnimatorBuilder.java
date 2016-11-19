@@ -8,7 +8,6 @@ import android.view.animation.Interpolator;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.cm.weixiangji.utils.OsUtils;
 
 import it.carlom.stikkyheader.core.StikkyCompat;
 
