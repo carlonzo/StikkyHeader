@@ -98,10 +98,20 @@ public class AnimatorBuilder {
         return applyTranslation(viewToTranslate, translationX, translationY, interpolator);
     }
 
+    /**
+     * Animate `translationX` and `translationY` properties of the view to `translateX`, `translateY` 
+     * @param translateX final translationX value of the view
+     * @param translateY final translationY value of the view
+     */
     public AnimatorBuilder applyTranslation(View viewToTranslate, float translateX, float translateY) {
         return applyTranslation(viewToTranslate, translateX, translateY, null);
     }
 
+    /**
+     * Animate `translationX` and `translationY` properties of the view to `translateX`, `translateY` 
+     * @param translateX final translationX value of the view
+     * @param translateY final translationY value of the view
+     */
     public AnimatorBuilder applyTranslation(View viewToTranslate, float translateX, float translateY, Interpolator interpolator) {
         if (viewToTranslate == null) {
             throw new IllegalArgumentException("You passed a null view");
