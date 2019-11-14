@@ -173,6 +173,7 @@ public class AnimatorBuilder {
     }
 
     /**
+     * @deprecatedIf you use the center point of the control as the starting point and the end point of the displacement, then the zoom animation will not have an impact on the displacement animation;    
      * called after a new scale or translation animation has been added
      */
     private void adjustTranslation(View viewAnimated) {
@@ -208,13 +209,13 @@ public class AnimatorBuilder {
             }
         }
 
-        if (animatorTranslationX != null && animatorScaleX != null) {
-            animatorTranslationX.mDelta = animatorTranslationX.mDelta + (animatorTranslationX.mView.getWidth() * (animatorScaleX.mDelta / 2f));
-        }
+       // if (animatorTranslationX != null && animatorScaleX != null) {
+       //     animatorTranslationX.mDelta = animatorTranslationX.mDelta + (animatorTranslationX.mView.getWidth() * (animatorScaleX.mDelta / 2f));
+       // }
 
-        if (animatorTranslationY != null && animatorScaleY != null) {
-            animatorTranslationY.mDelta = animatorTranslationY.mDelta + (animatorTranslationY.mView.getWidth() * (animatorScaleY.mDelta / 2f));
-        }
+       // if (animatorTranslationY != null && animatorScaleY != null) {
+       //     animatorTranslationY.mDelta = animatorTranslationY.mDelta + (animatorTranslationY.mView.getWidth() * (animatorScaleY.mDelta / 2f));
+       // }
 
     }
 
@@ -271,7 +272,16 @@ public class AnimatorBuilder {
     }
 
     public static Point buildPointView(View view) {
-        return new Point(view.getLeft(), view.getTop());
+            // return new Point(view.getLeft(), view.getTop());
+      int[] location = new int[2];
+      view.getLocationOnScreen(location);
+      int x = location[0];
+      int y = location[1];
+      int width = view.getWidth();
+      int height = view.getHeight();
+      x = x+ width/2;
+      y = y+ height/2;
+      return new Point(x, y);
     }
 
     public static float calculateScaleX(Rect from, Rect to) {
